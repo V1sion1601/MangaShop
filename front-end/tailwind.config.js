@@ -3,43 +3,14 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      margin: {
-        320: "320px",
+      fontFamily: {
+        title: "Bitter",
       },
-      width: {
-        120: "34rem",
-      },
+
       inset: {
         100: "32rem",
       },
-      height: {
-        80: "80px",
-        340: "340px",
-        370: "370px",
-        420: "420px",
-        510: "510px",
-        600: "600px",
-        685: "685px",
-        800: "800px",
-        "90vh": "90vh",
-      },
-      flex: {
-        0.7: "0.7 1 0%",
-      },
-      maxHeight: {
-        370: "370px",
-      },
-      minWidth: {
-        210: "210px",
-        350: "350px",
-        620: "620px",
-      },
-      textColor: {
-        lightGray: "#F1EFEE",
-        primary: "#FAFAFA",
-        secColor: "#efefef",
-        navColor: "#BEBEBE",
-      },
+
       backgroundColor: {
         mainColor: "#FBF8F9",
         secondaryColor: "#F0F0F0",
