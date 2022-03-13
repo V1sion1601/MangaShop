@@ -5,6 +5,7 @@ import { FaGoogle, FaFacebook } from "react-icons/fa";
 import isEmpty from "validator/lib/isEmpty";
 import isEmail from "validator/lib/isEmail";
 import { useNavigate } from "react-router-dom";
+import GoogleLogin from "react-google-login";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,7 +32,13 @@ const Login = () => {
     e.preventDefault();
     const isValid = validateAll();
     if (!isValid) return;
-    navigate("/login");
+    navigate("/");
+  };
+  //Google response
+  const responseGoogle = (response) => {
+    localStorage.setItem("user", JSON.stringify(response.profileObj));
+    console.log(localStorage.getItem("user"));
+    navigate("/");
   };
   return (
     <div className="flex justify-start items-center flex-col h-screen">
@@ -82,12 +89,22 @@ const Login = () => {
             Login with an existing account
           </div>
           <div className="flex flex-row gap-4 mt-3">
-            <button
-              type="button"
-              className="shadow-lg hover:bg-yellow-200 focus:bg-yellow-200 bg-white justify-center items-center p-3 rounded-lg cursor-pointer outline-none"
-            >
-              <FaGoogle />
-            </button>
+            <GoogleLogin
+              clientId={`${process.env.REACT_APP_GOOGLE_TOKEN}`}
+              render={(renderProps) => (
+                <button
+                  type="button"
+                  className="shadow-lg hover:bg-yellow-200 focus:bg-yellow-200 bg-white justify-center items-center p-3 rounded-lg cursor-pointer outline-none"
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                >
+                  <FaGoogle />
+                </button>
+              )}
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              cookiePolicy="single_host_origin"
+            />
             <button
               type="button"
               className="bg-white shadow-lg hover:bg-yellow-200 focus:bg-yellow-200 justify-center items-center p-3 rounded-lg cursor-pointer outline-none"

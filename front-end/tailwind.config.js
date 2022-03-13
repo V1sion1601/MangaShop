@@ -4,7 +4,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        title: "Bitter",
+        title: ["Bitter", "sans-serif"],
+        logo: ["Lora", "sans-serif"],
       },
 
       inset: {
