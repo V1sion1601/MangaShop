@@ -11,7 +11,9 @@ module.exports = {
       inset: {
         100: "32rem",
       },
-
+      borderColor: {
+        hover: "#523211",
+      },
       backgroundColor: {
         mainColor: "#FBF8F9",
         secondaryColor: "#F0F0F0",
@@ -56,7 +58,8 @@ module.exports = {
     },
   },
   variants: {
-    // backgroundColor: ['active'],
+    border: ["hover", "active"],
+
     extend: {},
   },
   plugins: [],

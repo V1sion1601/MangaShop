@@ -36,8 +36,7 @@ const Login = () => {
   };
   //Google response
   const responseGoogle = (response) => {
-    localStorage.setItem("user", JSON.stringify(response.profileObj));
-    console.log(localStorage.getItem("user"));
+    sessionStorage.setItem("user", JSON.stringify(response.profileObj));
     navigate("/");
   };
   return (
