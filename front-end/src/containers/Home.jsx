@@ -27,7 +27,7 @@ const Home = () => {
 
   return (
     <div className="flex flex-col h-screen transaction-height duration-75 ease-out ">
-      <div className="flex flex-row px-3 bg-gray-400">
+      <div className="flex flex-row px-3 bg-gray-400 z-50">
         <div className="p-2 w-full flex flex-row justify-start items-center ">
           <HiMenu fontSize={30} className="cursor-pointer inline " />
           <span className="pl-3 font-serif">MangaShop</span>

@@ -53,7 +53,7 @@ const Register = () => {
     <div className="flex justify-start items-center flex-col h-screen">
       <div className="relative w-full h-full">
         <img src={Image} alt="" className="w-full h-full object-cover" />
-        <div className="absolute flex flex-col  rounded-md justify-center items-center bg-blackOverlay inset-x-100 inset-y-14 ">
+        <div className="absolute flex flex-col  rounded-md justify-center items-center bg-whiteOverlay inset-x-100 inset-y-14 ">
           <h1 className="text-6xl font-semibold font-title">Register</h1>
           <form className="flex justify-center items-center flex-col">
             <label className="block mt-4">
