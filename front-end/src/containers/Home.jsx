@@ -13,6 +13,8 @@ import { CgProfile } from "react-icons/cg";
 //Elements
 import Shop from "./Shop";
 import Profile from "./Profile";
+//Components
+import ProductList from "./ProductList";
 
 const Home = () => {
   const user = JSON.parse(sessionStorage.getItem("user"));
@@ -25,10 +27,7 @@ const Home = () => {
 
   return (
     <div className="flex flex-col h-screen transaction-height duration-75 ease-out ">
-      <div
-        style={{ backgroundColor: "#ecb34f" }}
-        className="flex flex-row px-3"
-      >
+      <div className="flex flex-row px-3 bg-gray-400">
         <div className="p-2 w-full flex flex-row justify-start items-center ">
           <HiMenu fontSize={30} className="cursor-pointer inline " />
           <span className="pl-3 font-serif">MangaShop</span>
@@ -89,16 +88,16 @@ const Home = () => {
               </div>
             ) : (
               hover && (
-                <div className="absolute top-10 right-5 max-w-lg w-40  border shadow-md">
-                  <ul className="cursor-pointer   ">
+                <div className="absolute top-10 bg-white  right-5 max-w-lg w-32 shadow-md p-2">
+                  <ul className="cursor-pointer space-y-2">
                     <li
-                      className="border-b-2"
+                      className="border-b"
                       onClick={() => {
                         navigate("/login");
                       }}
                     >
                       <IoMdLogIn className="inline-block mr-3" />
-                      Login
+                      <span>Login</span>
                     </li>
                   </ul>
                 </div>
@@ -110,6 +109,7 @@ const Home = () => {
       <div className="px-4">
         <div className="p-2">
           <Routes>
+            <Route path="/*" element={<ProductList />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/profile/:userId" element={<Profile />} />
           </Routes>

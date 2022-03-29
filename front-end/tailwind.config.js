@@ -17,7 +17,7 @@ module.exports = {
       backgroundColor: {
         mainColor: "#FBF8F9",
         secondaryColor: "#F0F0F0",
-        blackOverlay: "rgba(255, 255 ,255 ,0.92)",
+        blackOverlay: "rgba(0, 0 ,0 ,0.7)",
         brown: "#F4FCD9",
       },
       keyframes: {

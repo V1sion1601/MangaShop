@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+//Components
 import Image from "../assets/Wallpaper.jpg";
+//Library
+import { Link } from "react-router-dom";
 import { FaGoogle, FaFacebook } from "react-icons/fa";
 import isEmpty from "validator/lib/isEmpty";
 import isEmail from "validator/lib/isEmail";
 import { useNavigate } from "react-router-dom";
 import GoogleLogin from "react-google-login";
+import { toast } from "react-toastify";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,10 +38,32 @@ const Login = () => {
     if (!isValid) return;
     navigate("/");
   };
-  //Google response
+  //Google response when succeed
   const responseGoogle = (response) => {
     sessionStorage.setItem("user", JSON.stringify(response.profileObj));
+    toast.success("Login successfully!", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
     navigate("/");
+  };
+  //Google response when fail
+  const responseGoogleFailure = () => {
+    toast.error("Login unsuccessfully!", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+    navigate("/login");
   };
   return (
     <div className="flex justify-start items-center flex-col h-screen">
@@ -101,7 +127,7 @@ const Login = () => {
                 </button>
               )}
               onSuccess={responseGoogle}
-              onFailure={responseGoogle}
+              onFailure={responseGoogleFailure}
               cookiePolicy="single_host_origin"
             />
             <button
@@ -113,7 +139,7 @@ const Login = () => {
           </div>
           <div className=" text-base mt-7 max-w-3">
             <p>
-              Do you have any account?{" "}
+              Do you have any account?
               <span className="text-amber-800">
                 <Link to="/register">Create it!</Link>
               </span>
