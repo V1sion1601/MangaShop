@@ -3,24 +3,15 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      fontFamily: {
-        title: ["Bitter", "sans-serif"],
-        logo: ["Lora", "sans-serif"],
-      },
-
       inset: {
         100: "32rem",
       },
-      borderColor: {
-        hover: "#523211",
-      },
+
       backgroundColor: {
         mainColor: "#FBF8F9",
         secondaryColor: "#F0F0F0",
         blackOverlay: "rgba(0, 0 ,0 ,0.7)",
         whiteOverlay: "rgba(255, 255 ,255 ,0.8)",
-
-        brown: "#F4FCD9",
       },
       keyframes: {
         "slide-in": {

@@ -36,7 +36,7 @@ const Login = () => {
     e.preventDefault();
     const isValid = validateAll();
     if (!isValid) return;
-    navigate("/");
+    navigate("/", { replace: true });
   };
   //Google response when succeed
   const responseGoogle = (response) => {
@@ -50,7 +50,7 @@ const Login = () => {
       draggable: true,
       progress: undefined,
     });
-    navigate("/");
+    navigate("/", { replace: true });
   };
   //Google response when fail
   const responseGoogleFailure = () => {

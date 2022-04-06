@@ -8,8 +8,8 @@ import Home from "./containers/Home";
 const App = () => {
   return (
     <Routes>
-      <Route path="login" element={<Login />} />
-      <Route path="register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/*" element={<Home />} />
     </Routes>

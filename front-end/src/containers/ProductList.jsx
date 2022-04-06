@@ -14,9 +14,8 @@ import Banner2 from "../assets/Banner2.jpg";
 import { itemsDataReleased, itemsDataTrending } from "../utils/dummyData";
 
 const ProductList = () => {
-  const todayDate = new Date().toLocaleString();
   return (
-    <div className="h-screen space-y-4 ">
+    <div className="h-full space-y-4 animate-slide-in ">
       {/* Setup for Banner (Advertisement) */}
       <Carousel autoPlay={true} interval={600}>
         <div class="w-full h-64 relative ">

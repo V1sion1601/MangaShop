@@ -1,21 +1,27 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { useParams } from "react-router-dom";
 //Components
 import Category from "../components/Category";
-import Products from "../components/Products";
+
+import DisplayItems from "../components/DisplayItems";
 //Dummy data
-import { categoryData } from "../utils/dummyData";
+import { categoryData, itemsDataReleased } from "../utils/dummyData";
 
 const Shop = () => {
+  const { categoryId } = useParams();
+  const cateId = parseInt(categoryId);
+
   return (
-    <div className="flex flex-col h-screen space-y-4">
-      <div className="flex flex-row mt-3">
-        <Category arrCategory={categoryData} />
+    <>
+      <div className="flex flex-col h-full space-y-10">
+        <div className="flex flex-row mt-3">
+          <Category arrCategory={categoryData} />
+        </div>
+        <div className="pb-7">
+          <DisplayItems cateId={cateId} arrData={itemsDataReleased} />
+        </div>
       </div>
-      <Routes>
-        <Route path="/category/:categoryId" element={<Products />} />
-      </Routes>
-    </div>
+    </>
   );
 };
 

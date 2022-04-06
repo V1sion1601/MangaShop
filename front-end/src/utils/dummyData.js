@@ -3,16 +3,16 @@ import CoverYuruCamp from "../assets/CoverYuruCamp.jpg";
 
 export const categoryData = [
   {
+    id: 0,
+    name: "All",
+  },
+  {
     id: 1,
-    locate: "light-novel",
     name: "Light novel",
-    backgroundColor: "red",
   },
   {
     id: 2,
-    locate: "manga",
     name: "Manga",
-    backgroundColor: "yellow",
   },
 ];
 
@@ -20,6 +20,7 @@ export const itemsDataReleased = [
   {
     id: 10,
     name: "86: Eighty-Six",
+    cateId: 1,
     price: 500,
     status: 1,
     imgSrc: Cover86,
@@ -27,6 +28,7 @@ export const itemsDataReleased = [
   {
     id: 11,
     name: "86: Eighty-Six",
+    cateId: 1,
     price: 500,
     status: 1,
     imgSrc: Cover86,
@@ -34,6 +36,7 @@ export const itemsDataReleased = [
   {
     id: 12,
     name: "86: Eighty-Six",
+    cateId: 1,
     price: 500,
     status: 1,
     imgSrc: Cover86,
@@ -41,6 +44,7 @@ export const itemsDataReleased = [
   {
     id: 13,
     name: "86: Eighty-Six",
+    cateId: 1,
     price: 500,
     status: 1,
     imgSrc: Cover86,
@@ -48,9 +52,18 @@ export const itemsDataReleased = [
   {
     id: 14,
     name: "86: Eighty-Six",
+    cateId: 1,
     price: 500,
     status: 0,
     imgSrc: Cover86,
+  },
+  {
+    id: 14,
+    name: "Yuru Camp",
+    cateId: 2,
+    price: 500,
+    status: 0,
+    imgSrc: CoverYuruCamp,
   },
 ];
 
