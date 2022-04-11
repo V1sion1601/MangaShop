@@ -7,7 +7,7 @@ import {
   useNavigate,
   useLocation,
 } from "react-router-dom";
-import { HiMenu, HiUserCircle, HiShoppingCart } from "react-icons/hi";
+import { HiMenu, HiUserCircle, HiShoppingCart, HiSearch } from "react-icons/hi";
 import { IoMdLogIn, IoMdLogOut } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 //Elements
@@ -17,6 +17,7 @@ import ProductDetails from "./ProductDetails";
 //Components
 import ProductList from "./ProductList";
 import Footer from "../components/Footer";
+import Search from "../components/Search";
 
 const Home = () => {
   const user = JSON.parse(sessionStorage.getItem("user"));
@@ -56,6 +57,12 @@ const Home = () => {
           </div>
 
           <div className="p-2 w-full flex flex-row justify-end items-center ">
+            <HiSearch
+              fontSize={30}
+              onClick={() => navigate("/search")}
+              className="cursor-pointer inline mr-5"
+            />
+
             <HiShoppingCart
               fontSize={30}
               className="cursor-pointer inline mr-5"
@@ -114,6 +121,7 @@ const Home = () => {
           <div className="p-2">
             <Routes>
               <Route path="/" element={<ProductList />} />
+              <Route path="/search" element={<Search />} />
               {/* In case if user accidentally deleted the parameter */}
               <Route path="/shop" element={<Shop />} />
               <Route path="/shop/:categoryId" element={<Shop />} />

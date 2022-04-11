@@ -58,7 +58,7 @@ export const itemsDataReleased = [
     imgSrc: Cover86,
   },
   {
-    id: 14,
+    id: 15,
     name: "Yuru Camp",
     cateId: 2,
     price: 500,
