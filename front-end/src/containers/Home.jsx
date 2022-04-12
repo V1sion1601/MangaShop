@@ -13,6 +13,7 @@ import { CgProfile } from "react-icons/cg";
 //Elements
 import Shop from "./Shop";
 import Profile from "./Profile";
+import Cart from "../components/Cart";
 import ProductDetails from "./ProductDetails";
 //Components
 import ProductList from "./ProductList";
@@ -125,9 +126,10 @@ const Home = () => {
               {/* In case if user accidentally deleted the parameter */}
               <Route path="/shop" element={<Shop />} />
               <Route path="/shop/:categoryId" element={<Shop />} />
-              <Route path="/profile/:userId" element={<Profile />} />
               {/* In case if user accidentally deleted the parameter */}
               <Route path="/details" element={<Shop />} />
+              <Route path="/profile/:userId" element={<Profile />} />
+              <Route path="/cart" element={<Cart />} />
               <Route path="/details/:productId" element={<ProductDetails />} />
             </Routes>
           </div>

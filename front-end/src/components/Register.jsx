@@ -122,7 +122,7 @@ const Register = () => {
 
             <input
               type="submit"
-              class="inline-block hover:cursor-pointer hover:bg-yellow-600 w-96 mt-6 px-5 py-3 rounded-lg shadow-lg bg-yellow-700 text-white uppercase tracking-wider font-semibold text-sm"
+              className="inline-block hover:cursor-pointer hover:bg-yellow-600 w-96 mt-6 px-5 py-3 rounded-lg shadow-lg bg-yellow-700 text-white uppercase tracking-wider font-semibold text-sm"
               value="Register"
               onClick={submitRegister}
             />

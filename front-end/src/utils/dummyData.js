@@ -104,3 +104,20 @@ export const itemsDataTrending = [
     imgSrc: CoverYuruCamp,
   },
 ];
+
+export const cartItems = [
+  {
+    id: 1,
+    image: CoverYuruCamp,
+    name: "Yuru Camp",
+    quantity: 20,
+    price: 600,
+  },
+  {
+    id: 2,
+    image: Cover86,
+    name: "86: Eighty-Six",
+    quantity: 20,
+    price: 600,
+  },
+];
