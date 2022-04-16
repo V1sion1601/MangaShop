@@ -137,4 +137,83 @@ export const checkItems = [
     quantity: 20,
     price: 600,
   },
+  {
+    id: 3,
+    image: Cover86,
+    name: "86: Eighty-Six",
+    quantity: 20,
+    price: 600,
+  },
+  {
+    id: 4,
+    image: Cover86,
+    name: "86: Eighty-Six",
+    quantity: 20,
+    price: 600,
+  },
+];
+
+export const orderItems = [
+  {
+    id: 1,
+    image: CoverYuruCamp,
+    name: "Yuru Camp",
+    quantity: 20,
+    price: 600,
+    status: "delivery",
+  },
+  {
+    id: 2,
+    image: Cover86,
+    name: "86: Eighty-Six",
+    quantity: 20,
+    price: 600,
+    status: "delivery",
+  },
+  {
+    id: 3,
+    image: Cover86,
+    name: "86: Eighty-Six",
+    quantity: 20,
+    price: 600,
+    status: "delivery",
+  },
+  {
+    id: 4,
+    image: Cover86,
+    name: "86: Eighty-Six",
+    quantity: 20,
+    price: 600,
+    status: "delivery",
+  },
+];
+
+export const accounts = [
+  {
+    id: 1,
+    name: "V1sion",
+    status: 1,
+  },
+  {
+    id: 2,
+    name: "Hao",
+    status: 1,
+  },
+];
+
+export const sales = [
+  {
+    id: 1,
+    image: CoverYuruCamp,
+    name: "Yuru Camp super sale",
+    percentage: 12,
+    date: "03/05",
+  },
+  {
+    id: 2,
+    image: Cover86,
+    name: "Lena's super sale",
+    percentage: 86,
+    date: "03/05",
+  },
 ];

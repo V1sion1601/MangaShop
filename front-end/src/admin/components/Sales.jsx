@@ -1,14 +1,12 @@
 import React from "react";
-
 //Dummy data
 import YuruCamp from "../../assets/CoverYuruCamp.jpg";
-const AddProduct = () => {
+import { sales } from "../../utils/dummyData";
+const Sales = () => {
   return (
     <div className="flex flex-row w-full h-full gap-5 ">
       <div className="flex flex-col justify-start items-center w-1/2 h-full pt-5 ">
-        <header className="font-bold uppercase text-2xl mb-5">
-          Add product
-        </header>
+        <header className="font-bold uppercase text-2xl mb-5">Add sales</header>
         <div>
           <form>
             <div className="grid grid-cols-2 gap-5">
@@ -19,11 +17,11 @@ const AddProduct = () => {
                 <input
                   type="text"
                   className="px-3 py-2  rounded-md w-full focus:outline-red-200"
-                  placeholder="Enter product name here"
+                  placeholder="Enter coupon name here"
                 />
               </div>
               <label className="flex justify-start items-center font-bold text-lg">
-                Price:
+                Percentage:
               </label>
               <div>
                 <input
@@ -33,11 +31,11 @@ const AddProduct = () => {
                 />
               </div>
               <label className="flex justify-start items-center font-bold text-lg">
-                Quantity:
+                Date:
               </label>
               <div>
                 <input
-                  type="text"
+                  type="date"
                   className="px-3 py-2  rounded-md w-full focus:outline-red-200"
                   placeholder="Enter quantity here"
                 />
@@ -60,15 +58,15 @@ const AddProduct = () => {
         </div>
         <div className="border-t-2 border-gray-300 w-full h-full overflow-y-scroll">
           <h1 className="font-bold uppercase text-2xl mb-5 pt-5 text-center  ">
-            Current Items
+            Current Sales
           </h1>
           <table className="table-auto w-full">
             <thead className="border-b-2   border-gray-300 font-bold ">
               <td>ID</td>
               <td>Image</td>
               <td>Name</td>
-              <td>Price</td>
-              <td>Quantity</td>
+              <td>Percentage</td>
+              <td>Date</td>
             </thead>
             <tbody>
               <tr className="border-b-2   border-gray-300">
@@ -76,9 +74,9 @@ const AddProduct = () => {
                 <td>
                   <img className="h-36 py-2" src={YuruCamp} alt="demo" />
                 </td>
-                <td>Yuru Camp</td>
-                <td>$80</td>
-                <td>30</td>
+                <td>Yuru Camp mega sale</td>
+                <td>5%</td>
+                <td>03/06</td>
               </tr>
             </tbody>
           </table>
@@ -86,26 +84,28 @@ const AddProduct = () => {
       </div>
       <div className="flex flex-col justify-start items-center w-1/2 ">
         <header className="font-bold uppercase text-2xl mb-5 pt-5">
-          Products Table
+          Sales Available
         </header>
         <table className="table-auto w-full">
           <thead className="border-b-2   border-gray-300 font-bold ">
             <td>ID</td>
             <td>Image</td>
             <td>Name</td>
-            <td>Price</td>
-            <td>Quantity</td>
+            <td>Percentage</td>
+            <td>Date</td>
           </thead>
           <tbody>
-            <tr className="border-b-2   border-gray-300">
-              <td>1</td>
-              <td>
-                <img className="h-36 py-2" src={YuruCamp} alt="demo" />
-              </td>
-              <td>Yuru Camp</td>
-              <td>$80</td>
-              <td>30</td>
-            </tr>
+            {sales.map((sale, index) => (
+              <tr key={index} className="border-b-2   border-gray-300">
+                <td>{sale.id}</td>
+                <td>
+                  <img className="h-36 py-2" src={sale.image} alt="demo" />
+                </td>
+                <td>{sale.name}</td>
+                <td>{sale.percentage}%</td>
+                <td>{sale.date}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
@@ -113,4 +113,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default Sales;

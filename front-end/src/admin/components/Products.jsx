@@ -1,24 +1,22 @@
 import React, { useState } from "react";
 //Dummy data
-// import YuruCamp from "../../assets/CoverYuruCamp.jpg";
+
 import { checkItems } from "../../utils/dummyData";
 const Products = () => {
   const [checkbox, setCheckbox] = useState(
     new Array(checkItems.length).fill(false)
   );
-
-  const handleDeleteBtn = () => {
-    let checked = checkbox.filter((checked) => checked === true);
-    console.log(checked.length);
-  };
-
+  console.log(checkbox);
   const handleCheckbox = (pos) => {
     const updatedCheckedState = checkbox.map((item, index) =>
       index === pos ? !item : item
     );
     setCheckbox(updatedCheckedState);
   };
-
+  const handleDeleteBtn = () => {
+    let checked = checkbox.filter((checked) => checked === true);
+    alert(checked.length);
+  };
   return (
     <div className="flex flex-col justify-start items-center">
       <header className="font-bold uppercase text-2xl mb-5 pt-6">

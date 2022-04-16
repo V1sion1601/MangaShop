@@ -6,6 +6,9 @@ import { BsMouse3 } from "react-icons/bs";
 //Page
 import AddProduct from "../components/AddProduct";
 import Products from "../components/Products";
+import Orders from "../components/Orders";
+import Accounts from "../components/Accounts";
+import Sales from "../components/Sales";
 const Admin = () => {
   const { pathname } = useLocation();
   console.log(pathname);
@@ -35,9 +38,36 @@ const Admin = () => {
               Quản lý sản phẩm
             </NavLink>
           </div>
-          <div>Quản lý hóa đơn</div>
-          <div>Quản lý tài khoản</div>
-          <div>Quản lý khuyến mãi</div>
+          <div className="hover:border-b-4 hover:border-hover active:border-b-4 active:border-hover">
+            <NavLink
+              className={
+                pathname === "/admin/orders" && "font-bold text-gray-700"
+              }
+              to="/admin/orders"
+            >
+              Quản lý đơn hàng
+            </NavLink>
+          </div>
+          <div className="hover:border-b-4 hover:border-hover active:border-b-4 active:border-hover">
+            <NavLink
+              className={
+                pathname === "/admin/accounts" && "font-bold text-gray-700"
+              }
+              to="/admin/accounts"
+            >
+              Quản lý tài khoản
+            </NavLink>
+          </div>
+          <div className="hover:border-b-4 hover:border-hover active:border-b-4 active:border-hover">
+            <NavLink
+              className={
+                pathname === "/admin/sales" && "font-bold text-gray-700"
+              }
+              to="/admin/sales"
+            >
+              Quản lý khuyến mãi
+            </NavLink>
+          </div>
         </div>
         <div className="w-5/6 h-screen px-3">
           {pathname === "/admin" && (
@@ -51,6 +81,9 @@ const Admin = () => {
 
           {pathname === "/admin/add" && <AddProduct />}
           {pathname === "/admin/products" && <Products />}
+          {pathname === "/admin/orders" && <Orders />}
+          {pathname === "/admin/accounts" && <Accounts />}
+          {pathname === "/admin/sales" && <Sales />}
         </div>
       </div>
     </>
