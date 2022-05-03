@@ -18,3 +18,15 @@ product.get_all = function(result){
         result(data); 
     });
 }
+product.getbyId = function(id, result){
+    //console.log(id);
+    db.query("SELECT * FROM product WHERE id = ?", id, function(err, product){
+        console.log(err,product);
+        if(err){
+            result(null);
+            return;
+        }
+        result(product);
+
+    });
+}
