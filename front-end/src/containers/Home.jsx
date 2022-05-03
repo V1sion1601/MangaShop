@@ -52,9 +52,6 @@ const Home = () => {
                 Shop
               </NavLink>
             </div>
-            <div className="hover:border-b-4 hover:border-hover">About</div>
-            <div className="hover:border-b-4 hover:border-hover">FAQ</div>
-            <div className="hover:border-b-4 hover:border-hover">Contact</div>
           </div>
 
           <div className="p-2 w-full flex flex-row justify-end items-center ">

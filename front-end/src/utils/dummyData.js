@@ -1,6 +1,6 @@
 import Cover86 from "../assets/TestItem.jpg";
 import CoverYuruCamp from "../assets/CoverYuruCamp.jpg";
-
+import Stone01 from "../assets/stone01.jpg";
 export const categoryData = [
   {
     id: 0,
@@ -19,11 +19,11 @@ export const categoryData = [
 export const itemsDataReleased = [
   {
     id: 10,
-    name: "86: Eighty-Six",
+    name: "Dr.Stone",
     cateId: 1,
     price: 500,
     status: 1,
-    imgSrc: Cover86,
+    imgSrc: Stone01,
   },
   {
     id: 11,

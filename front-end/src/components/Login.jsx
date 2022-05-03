@@ -130,12 +130,12 @@ const Login = () => {
               onFailure={responseGoogleFailure}
               cookiePolicy="single_host_origin"
             />
-            <button
+            {/* <button
               type="button"
               className="bg-white shadow-lg hover:bg-yellow-200 focus:bg-yellow-200 justify-center items-center p-3 rounded-lg cursor-pointer outline-none"
             >
               <FaFacebook />
-            </button>
+            </button> */}
           </div>
           <div className=" text-base mt-7 max-w-3">
             <p>
