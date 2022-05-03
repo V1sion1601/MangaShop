@@ -38,9 +38,17 @@ const Orders = () => {
                   onClick={() => {
                     console.log(item.id);
                   }}
-                  className="bg-green-500 text-white rounded-md shadow-lg font-bold uppercase px-5 py-3 hover:bg-green-400 hover:-translate-y-0.5 transform transition active:ring-1 active:ring-offset-4"
+                  className="mr-5 bg-green-500 text-white rounded-md shadow-lg font-bold uppercase px-5 py-3 hover:bg-green-400 hover:-translate-y-0.5 transform transition active:ring-1 active:ring-offset-4"
                 >
-                  Edit
+                  Details
+                </button>
+                <button
+                  onClick={() => {
+                    console.log(item.id);
+                  }}
+                  className="bg-red-500 text-white rounded-md shadow-lg font-bold uppercase px-5 py-3 hover:bg-red-400 hover:-translate-y-0.5 transform transition active:ring-1 active:ring-offset-4"
+                >
+                  Confirm
                 </button>
               </td>
             </tr>
