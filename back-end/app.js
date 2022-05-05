@@ -1,6 +1,6 @@
-const express = require('express');
-const res = require('express/lib/response');
-const bodyparser = require('body-parser');
+const express = require("express");
+const res = require("express/lib/response");
+const bodyparser = require("body-parser");
 const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
@@ -11,7 +11,7 @@ const categoryroutes = require('./routes/category');
 const saleroutes = require('./routes/sale');
 const accountroutes = require('./routes/account');
 const order_detailroutes = require('./routes/order_detail');
-app.listen(3000, ()=>{
+app.listen(8000, ()=>{
     console.log("server đang chạy");
 });
 app.use(bodyparser.json({limit:"50mb"}));
@@ -49,5 +49,3 @@ app.use("/order/detail/",order_detailroutes);
 //         })
 //     })
 // });
-
-
