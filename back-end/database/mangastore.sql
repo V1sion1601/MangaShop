@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2022 at 07:47 AM
+-- Generation Time: May 05, 2022 at 05:50 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.13
 
@@ -31,8 +31,16 @@ CREATE TABLE `account` (
   `ID` int(11) NOT NULL,
   `Username` varchar(25) NOT NULL,
   `Password` int(11) NOT NULL,
-  `ID_google` int(11) NOT NULL
+  `ID_google` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `account`
+--
+
+INSERT INTO `account` (`ID`, `Username`, `Password`, `ID_google`) VALUES
+(1, 'hao456c', 123456, 0),
+(2, 'hao456c', 123456, NULL);
 
 -- --------------------------------------------------------
 
@@ -84,8 +92,17 @@ INSERT INTO `category` (`ID`, `Name`) VALUES
 CREATE TABLE `customers` (
   `ID` int(11) NOT NULL,
   `Name` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `ID_account` int(11) NOT NULL
+  `ID_account` int(11) NOT NULL,
+  `adress` varchar(50) NOT NULL,
+  `phone` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`ID`, `Name`, `ID_account`, `adress`, `phone`) VALUES
+(8, 'Nguyễn Hoàng Hảo', 1, 'abc', '0902030405');
 
 -- --------------------------------------------------------
 
@@ -97,8 +114,15 @@ CREATE TABLE `order` (
   `ID` int(11) NOT NULL,
   `price` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `shipping` int(11) NOT NULL
+  `ID_customer` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `order`
+--
+
+INSERT INTO `order` (`ID`, `price`, `quantity`, `ID_customer`) VALUES
+(2, 30000, 1, 8);
 
 -- --------------------------------------------------------
 
@@ -111,6 +135,13 @@ CREATE TABLE `orderdetail` (
   `ID_product` int(11) NOT NULL,
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `orderdetail`
+--
+
+INSERT INTO `orderdetail` (`ID_order`, `ID_product`, `quantity`) VALUES
+(2, 12, 23);
 
 -- --------------------------------------------------------
 
@@ -222,7 +253,8 @@ ALTER TABLE `customers`
 -- Indexes for table `order`
 --
 ALTER TABLE `order`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `ID_customer` (`ID_customer`);
 
 --
 -- Indexes for table `orderdetail`
@@ -260,7 +292,7 @@ ALTER TABLE `sale`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `author`
@@ -278,13 +310,13 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -313,6 +345,12 @@ ALTER TABLE `sale`
 --
 ALTER TABLE `customers`
   ADD CONSTRAINT `ID_account` FOREIGN KEY (`ID_account`) REFERENCES `account` (`ID`);
+
+--
+-- Constraints for table `order`
+--
+ALTER TABLE `order`
+  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`ID_customer`) REFERENCES `customers` (`ID`);
 
 --
 -- Constraints for table `orderdetail`
