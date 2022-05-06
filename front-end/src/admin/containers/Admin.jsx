@@ -9,6 +9,7 @@ import Products from "../components/Products";
 import Orders from "../components/Orders";
 import Accounts from "../components/Accounts";
 import Sales from "../components/Sales";
+import Categories from "../components/Categories";
 const Admin = () => {
   const { pathname } = useLocation();
   console.log(pathname);
@@ -68,6 +69,16 @@ const Admin = () => {
               Quản lý khuyến mãi
             </NavLink>
           </div>
+          <div className="hover:border-b-4 hover:border-hover active:border-b-4 active:border-hover">
+            <NavLink
+              className={
+                pathname === "/admin/categories" && "font-bold text-gray-700"
+              }
+              to="/admin/categories"
+            >
+              Quản lý danh mục
+            </NavLink>
+          </div>
         </div>
         <div className="w-5/6 h-screen px-3">
           {pathname === "/admin" && (
@@ -84,6 +95,7 @@ const Admin = () => {
           {pathname === "/admin/orders" && <Orders />}
           {pathname === "/admin/accounts" && <Accounts />}
           {pathname === "/admin/sales" && <Sales />}
+          {pathname === "/admin/categories" && <Categories />}
         </div>
       </div>
     </>

@@ -40,7 +40,7 @@ const Home = () => {
           <div className="p-2 w-full flex flex-row gap-8 justify-center items-center ">
             <div className="hover:border-b-4 hover:border-hover active:border-b-4 active:border-hover">
               <NavLink className={pathname === "/" && "font-semibold"} to="/">
-                Home
+                Trang chủ
               </NavLink>
             </div>
 
@@ -49,7 +49,7 @@ const Home = () => {
                 className={pathname === "/shop/0" && "font-semibold"}
                 to="/shop/0"
               >
-                Shop
+                Cửa hàng
               </NavLink>
             </div>
           </div>
@@ -65,13 +65,15 @@ const Home = () => {
               fontSize={30}
               className="cursor-pointer inline mr-5"
               onClick={() => {
-                user ? navigate("/cart") : alert("You haven't logged in");
+                user
+                  ? navigate("/cart")
+                  : alert("Bạn chưa đăng nhập tài khoản");
               }}
             />
             <div onClick={() => setHover(!hover)}>
               <HiUserCircle fontSize={30} className="cursor-pointer inline " />
               <span className="pl-3 font-serif relative cursor-pointer">
-                {`${user?.name ? user?.name : "Hello User"}`}
+                {`${user?.name ? user?.name : "Xin chào User"}`}
               </span>
 
               {/*Check user and hover variable*/}
@@ -80,7 +82,9 @@ const Home = () => {
                   <ul className="cursor-pointer space-y-2">
                     <li className="border-b">
                       <CgProfile className="inline-block mr-3" />
-                      <Link to={`/profile/${user.googleId}`}>Profile</Link>
+                      <Link to={`/profile/${user.googleId}`}>
+                        Trang cá nhân
+                      </Link>
                     </li>
                     <li
                       className="border-b"
@@ -90,7 +94,7 @@ const Home = () => {
                       }}
                     >
                       <IoMdLogOut className="inline-block mr-3" />
-                      <span>Logout</span>
+                      <span>Đăng xuất</span>
                     </li>
                   </ul>
                 </div>
@@ -105,7 +109,7 @@ const Home = () => {
                         }}
                       >
                         <IoMdLogIn className="inline-block mr-3" />
-                        <span>Login</span>
+                        <span>Đăng nhập</span>
                       </li>
                     </ul>
                   </div>

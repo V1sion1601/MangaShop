@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-//Dummy data
+import { checkCategories } from "../../utils/dummyData";
 
-import { checkItems } from "../../utils/dummyData";
-const Products = () => {
+const Categories = () => {
   const [checkbox, setCheckbox] = useState(
-    new Array(checkItems.length).fill(false)
+    new Array(checkCategories.length).fill(false)
   );
   console.log(checkbox);
   const handleCheckbox = (pos) => {
@@ -20,7 +19,7 @@ const Products = () => {
   return (
     <div className="flex flex-col justify-start items-center">
       <header className="font-bold uppercase text-2xl mb-5 pt-6">
-        Products Management
+        Categories Management
       </header>
       <div className="flex flex-row justify-end items-end w-full px-5 pb-6 gap-2">
         <button
@@ -39,22 +38,16 @@ const Products = () => {
       <table className="table-auto w-full ">
         <thead className="border-b-2   border-gray-300 font-bold ">
           <td>ID</td>
-          <td>Image</td>
           <td>Name</td>
-          <td>Price</td>
-          <td>Quantity</td>
+          <td>Description</td>
           <td>Delete</td>
         </thead>
         <tbody>
-          {checkItems.map((item, index) => (
+          {checkCategories.map((item, index) => (
             <tr key={index} className="border-b-2   border-gray-300">
               <td>{item.id}</td>
-              <td>
-                <img className="h-44 py-2" src={item.image} alt="demo" />
-              </td>
               <td>{item.name}</td>
-              <td>{`$${item.price}`}</td>
-              <td>{item.quantity}</td>
+              <td>{item.description}</td>
               <td>
                 <input
                   type="checkbox"
@@ -72,4 +65,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default Categories;

@@ -5,7 +5,7 @@ import Item from "./Item";
 const ItemCarousel = ({ header, arrData }) => {
   return (
     <div>
-      <header className="font-semibold text-3xl text-indigo-500">
+      <header className="font-semibold text-3xl text-indigo-500 uppercase">
         {header}
       </header>
       {/* Carousel for Items of each category of items */}

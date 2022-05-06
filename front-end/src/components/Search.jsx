@@ -11,12 +11,12 @@ const Search = () => {
   search === ""
     ? (foundResult = itemsDataReleased)
     : (foundResult = itemsDataReleased.filter((data) =>
-        data.name.includes(search)
+        data.name.toLowerCase().includes(search.toLowerCase())
       ));
   return (
     <div className="flex flex-col justify-start items-start w-full py-4">
       <input
-        placeholder="Find your search..."
+        placeholder="Nhập để tìm kiếm..."
         type="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
@@ -35,7 +35,7 @@ const Search = () => {
             />
           ))
         ) : (
-          <Error msg={"Sorry, seems like you type it wrong"} />
+          <Error msg={"Không có kết quả, mời bạn nhập lại"} />
         )}
       </div>
     </div>

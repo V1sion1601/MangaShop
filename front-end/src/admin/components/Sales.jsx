@@ -40,12 +40,6 @@ const Sales = () => {
                   placeholder="Enter quantity here"
                 />
               </div>
-              <label className="flex justify-start items-center font-bold text-lg">
-                Image:
-              </label>
-              <div>
-                <input type="file" placeholder="Enter quantity here" />
-              </div>
             </div>
             <div className="flex flex-col justify-center items-center mt-5">
               <input
@@ -63,19 +57,19 @@ const Sales = () => {
           <table className="table-auto w-full">
             <thead className="border-b-2   border-gray-300 font-bold ">
               <td>ID</td>
-              <td>Image</td>
+
               <td>Name</td>
               <td>Percentage</td>
-              <td>Date</td>
+              <td>Date Start</td>
+              <td>Date Finish</td>
             </thead>
             <tbody>
               <tr className="border-b-2   border-gray-300">
                 <td>1</td>
-                <td>
-                  <img className="h-36 py-2" src={YuruCamp} alt="demo" />
-                </td>
+
                 <td>Yuru Camp mega sale</td>
                 <td>5%</td>
+                <td>03/06</td>
                 <td>03/06</td>
               </tr>
             </tbody>
@@ -89,20 +83,20 @@ const Sales = () => {
         <table className="table-auto w-full">
           <thead className="border-b-2   border-gray-300 font-bold ">
             <td>ID</td>
-            <td>Image</td>
+
             <td>Name</td>
             <td>Percentage</td>
-            <td>Date</td>
+            <td>Date Start</td>
+            <td>Date Finish</td>
           </thead>
           <tbody>
             {sales.map((sale, index) => (
               <tr key={index} className="border-b-2   border-gray-300">
                 <td>{sale.id}</td>
-                <td>
-                  <img className="h-36 py-2" src={sale.image} alt="demo" />
-                </td>
+
                 <td>{sale.name}</td>
                 <td>{sale.percentage}%</td>
+                <td>{sale.date}</td>
                 <td>{sale.date}</td>
               </tr>
             ))}

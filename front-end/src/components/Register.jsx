@@ -17,23 +17,23 @@ const Register = () => {
   const validateAll = () => {
     const msg = {};
     if (isEmpty(email)) {
-      msg.email = "Please input your Email";
+      msg.email = "Mời bạn nhập lại email";
     } else if (!isEmail(email)) {
-      msg.email = "Your email is incorrect";
+      msg.email = "Email của bạn không chính xác";
     }
 
     if (isEmpty(password)) {
-      msg.password = "Please input your Password";
+      msg.password = "Mời bạn nhập lại mật khẩu";
     } else if (password < 6) {
-      msg.password = "Weak Password";
+      msg.password = "Mật khẩu của bạn quá yếu, hãy nhập lại mật khẩu";
     }
     if (isEmpty(cpassword)) {
-      msg.cpassword = "Please input your Confirm Password";
+      msg.cpassword = "Mời bạn nhập mật khẩu xác thực";
     } else if (cpassword !== password) {
-      msg.cpassword = "Password and Confirm Password don't match";
+      msg.cpassword = "Mật khẩu và mật khẩu xác thực của bạn không giống nhau";
     }
     if (!checked) {
-      msg.check = "Please check your box";
+      msg.check = "Mời bạn đánh vào ô xác nhận";
     }
 
     setErrors(msg);
@@ -54,7 +54,9 @@ const Register = () => {
       <div className="relative w-full h-full">
         <img src={Image} alt="" className="w-full h-full object-cover" />
         <div className="absolute flex flex-col  rounded-md justify-center items-center bg-whiteOverlay inset-x-100 inset-y-14 ">
-          <h1 className="text-6xl font-semibold font-title">Register</h1>
+          <h1 className="text-4xl font-semibold font-title uppercase">
+            Đăng ký
+          </h1>
           <form className="flex justify-center items-center flex-col">
             <label className="block mt-4">
               <span class="block text-md font-medium text-slate-700">
@@ -73,12 +75,12 @@ const Register = () => {
             </label>
             <label className="block mt-4">
               <span class="block text-md font-medium text-slate-700">
-                Password<span className="text-red-600">*</span>
+                Mật khẩu<span className="text-red-600">*</span>
               </span>
               <input
                 type="password"
                 className="inline-block focus:ring-1 pl-3 py-2 mt-2 mb-2 bg-white  w-96 gap-2 rounded-lg outline-none"
-                placeholder="Password"
+                placeholder="Nhập password (6 kí tự trở lên)"
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
@@ -88,12 +90,13 @@ const Register = () => {
             </label>
             <label className="block mt-4">
               <span class="block text-md font-medium text-slate-700">
-                Confirm Password<span className="text-red-600">*</span>
+                Mật khẩu xác thực
+                <span className="text-red-600">*</span>
               </span>
               <input
                 type="password"
                 className="inline-block focus:ring-1 pl-3 py-2 mt-2 mb-2 bg-white  w-96 gap-2 rounded-lg outline-none"
-                placeholder="Confirm Password"
+                placeholder="Nhập mật khẩu xác thực "
                 value={cpassword}
                 onChange={(e) => {
                   setCPassword(e.target.value);
@@ -113,7 +116,7 @@ const Register = () => {
                     }}
                   />
                   <span className="text-md font-medium text-slate-700">
-                    I have read all the rules and accept
+                    Tôi đồng ý sử dụng dịch vụ website
                   </span>
                 </label>
               </div>
@@ -123,15 +126,15 @@ const Register = () => {
             <input
               type="submit"
               className="inline-block hover:cursor-pointer hover:bg-yellow-600 w-96 mt-6 px-5 py-3 rounded-lg shadow-lg bg-yellow-700 text-white uppercase tracking-wider font-semibold text-sm"
-              value="Register"
+              value="Đăng ký"
               onClick={submitRegister}
             />
           </form>
-          <div className=" text-base mt-7 max-w-3">
+          <div className=" text-base mt-7 max-w-3 text-center">
             <p>
-              Already had an account? Let's back to{" "}
+              Bạn đã có tài khoản rồi? Hãy{" "}
               <span className="text-amber-800">
-                <Link to="/login">Login</Link>
+                <Link to="/login">đăng nhập!</Link>
               </span>
             </p>
           </div>

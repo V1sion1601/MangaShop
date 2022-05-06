@@ -9,24 +9,24 @@ const Item = ({ id, name, price, status, imgSrc }) => {
       <header className="font-semibold text-xl tracking-wide mt-4">
         {name}
       </header>
-      <p>
-        Price: <span className="text-indigo-500 font-bold">{`$${price}`}</span>
+      <p className="mt-2">
+        Giá: <span className="text-indigo-500 font-bold">{`${price} VNĐ`}</span>
       </p>
-      <p className="mb-3">
-        Status:
+      <p className="mb-3 pb-2">
+        Tình trạng:
         <span
           className={`${
             status === 1 ? "text-indigo-500" : "text-red-500"
           } font-bold`}
         >
-          {status === 1 ? " Available" : " Sold out"}
+          {status === 1 ? " Còn hàng" : " Hết hàng"}
         </span>
       </p>
       <Link
         to={`/details/${id}`}
         className="px-7 py-3 mb-4 rounded-lg bg-indigo-500 uppercase tracking-wider font-semibold text-sm text-white shadow-lg hover:-translate-y-0.5 transform transition hover:bg-indigo-400 focus:ring focus:ring-offset-2 active:bg-indigo-600"
       >
-        Buy
+        Mua
       </Link>
     </div>
   );

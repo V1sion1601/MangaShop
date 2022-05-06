@@ -39,8 +39,8 @@ const ProductList = () => {
         </div>
       </Carousel>
       <div>
-        <ItemCarousel arrData={itemsDataReleased} header={"Just Released"} />
-        <ItemCarousel arrData={itemsDataTrending} header={"Trending"} />
+        <ItemCarousel arrData={itemsDataReleased} header={"Vừa xuất bản"} />
+        <ItemCarousel arrData={itemsDataTrending} header={"Đang thịnh hành"} />
       </div>
     </div>
   );

@@ -217,3 +217,11 @@ export const sales = [
     date: "03/05",
   },
 ];
+
+export const checkCategories = [
+  {
+    id: 1,
+    name: "Light novel",
+    description: "Hello world!",
+  },
+];
