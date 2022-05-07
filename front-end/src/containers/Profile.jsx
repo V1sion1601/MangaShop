@@ -103,11 +103,10 @@ const Profile = () => {
         <table className="table-auto w-full ">
           <thead className="border-b-2   border-gray-300 font-bold ">
             <td>ID</td>
-            <td>Price</td>
-            <td>Quantity</td>
-            <td>Order Status</td>
-
-            <td>Detail</td>
+            <td>Giá</td>
+            <td>Số lượng</td>
+            <td>Tình trạng đơn hàng</td>
+            <td>Chi tiết</td>
           </thead>
           <tbody>
             <td></td>

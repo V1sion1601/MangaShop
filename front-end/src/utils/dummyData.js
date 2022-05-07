@@ -204,17 +204,20 @@ export const accounts = [
 export const sales = [
   {
     id: 1,
-    image: CoverYuruCamp,
     name: "Yuru Camp super sale",
     percentage: 12,
-    date: "03/05",
+    dateStart: "03/05/2022",
+    dateEnd: "03/05/2022",
+
+    condition: 10000,
   },
   {
     id: 2,
-    image: Cover86,
     name: "Lena's super sale",
     percentage: 86,
-    date: "03/05",
+    dateStart: "03/05/2022",
+    dateEnd: "03/05/2022",
+    condition: 10000,
   },
 ];
 

@@ -111,7 +111,6 @@ const Register = () => {
                     className="mr-3 mb-1 h-4 w-4"
                     type="checkbox"
                     onChange={(e) => {
-                      console.log(e.target.checked);
                       setChecked(e.target.checked);
                     }}
                   />

@@ -15,8 +15,8 @@ const Admin = () => {
   console.log(pathname);
   return (
     <>
-      <div className="flex flex-row  h-screen duration-75 ">
-        <div className="flex flex-col bg-red-50 w-1/6 justify-start gap-5 font-bold items-center">
+      <div className="flex flex-row h-full duration-75 ">
+        <div className="flex flex-col bg-red-50 w-1/6 justify-start gap-5 font-bold items-center shadow">
           <div className="font-bold uppercase flex flex-row items-center justify-center w-full px-4 py-4">
             <GrUserAdmin fontSize={50} className="mr-2 " />
             <NavLink to="/admin">Admin</NavLink>
@@ -84,9 +84,7 @@ const Admin = () => {
           {pathname === "/admin" && (
             <div className="flex flex-col justify-center items-center h-screen">
               <BsMouse3 fontSize={50} />
-              <p className="font-bold text-2xl">
-                Click to choose your features
-              </p>
+              <p className="font-bold text-2xl">Nhấn để chọn chức năng</p>
             </div>
           )}
 
