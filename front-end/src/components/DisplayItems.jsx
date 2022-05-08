@@ -3,6 +3,8 @@ import Item from "./Item";
 import { useNavigate } from "react-router-dom";
 //Components
 import ReactPaginate from "react-paginate";
+import Category from "../components/Category";
+import { categoryData } from "../utils/dummyData";
 
 const DisplayItems = ({ cateId, arrData }) => {
   const categoryId = parseInt(cateId);
@@ -14,13 +16,15 @@ const DisplayItems = ({ cateId, arrData }) => {
   const itemsPerPage = 4;
   const [currentItems, setCurrentItems] = useState(arrResult);
   const [pageCount, setPageCount] = useState(0);
-  const [itemOffset, setItemOffset] = useState(0);
+  const [itemOffset, setItemOffset] = useState(
+    parseInt(localStorage.getItem("currentPage"))
+  );
 
   const handlePageClick = (event) => {
+    //event.selected = localStorage.getItem("currentPage");
     const newOffset =
       (parseInt(event.selected) * itemsPerPage) % arrResult.length;
     localStorage.setItem("currentPage", parseInt(event.selected));
-
     setItemOffset(newOffset);
 
     // navigate(`/shop/${categoryId}`);
@@ -28,7 +32,7 @@ const DisplayItems = ({ cateId, arrData }) => {
 
   useEffect(() => {
     let endOffset = itemOffset + itemsPerPage;
-
+    console.log(itemOffset);
     if (arrResult.slice(itemOffset, endOffset).length > 0) {
       setCurrentItems(arrResult.slice(itemOffset, endOffset));
     } else {
@@ -39,6 +43,9 @@ const DisplayItems = ({ cateId, arrData }) => {
   }, [itemOffset, itemsPerPage, arrResult]);
   return (
     <div>
+      <div className="flex flex-row mt-3">
+        <Category arrCategory={categoryData} offset={setItemOffset} />
+      </div>
       <div className="grid grid-cols-4 gap-4">
         {currentItems.map((book) => (
           <div>
@@ -66,6 +73,7 @@ const DisplayItems = ({ cateId, arrData }) => {
             pageRangeDisplayed={5}
             pageCount={pageCount}
             initialPage={parseInt(localStorage.getItem("currentPage"))}
+            forcePage={parseInt(localStorage.getItem("currentPage"))}
             previousLabel="Trước"
             renderOnZeroPageCount={null}
             activeClassName="bg-indigo-300"
