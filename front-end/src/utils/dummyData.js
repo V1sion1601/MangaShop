@@ -197,7 +197,7 @@ export const accounts = [
   {
     id: 2,
     name: "Hao",
-    status: 1,
+    status: 2,
   },
 ];
 
