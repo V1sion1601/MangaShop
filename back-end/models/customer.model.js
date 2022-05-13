@@ -20,7 +20,7 @@ customer.get_all = function(result){
 }
 customer.getbyId = function(id, result){
     //console.log(id);
-    db.query("SELECT * FROM `customers` WHERE `ID` = ?", id, function(err, customer){
+    db.query("SELECT * FROM `customers` WHERE `ID_account` = ?", id, function(err, customer){
         if(err){
             result(null);
             return;

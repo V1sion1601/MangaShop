@@ -1,18 +1,33 @@
 import React, { useState } from "react";
 //Dummy Data
-import { itemsDataReleased } from "../utils/dummyData";
+import { itemsDataReleased,product } from "../utils/dummyData";
 //Components
 import Item from "./Item";
 import Error from "./Error";
+import { useEffect } from "react";
 const Search = () => {
   const [search, setSearch] = useState("");
   console.log(search);
+  const [productList, setProductList] = useState([]);
+  useEffect(() => {
+  const fetchProductList = async () => {
+  try {
+  const response = await itemsDataReleased();
+  setProductList(response);
+  console.log(productList);
+  } catch (error) {
+  console.log('Failed to fetch product list: ', error);
+  }
+  }
+  fetchProductList();
+  }, []);
   let foundResult = [];
   search === ""
-    ? (foundResult = itemsDataReleased)
-    : (foundResult = itemsDataReleased.filter((data) =>
-        data.name.toLowerCase().includes(search.toLowerCase())
+    ? (foundResult = productList)
+    : (foundResult = productList.filter((data) =>
+        data.Name.toLowerCase().includes(search.toLowerCase())
       ));
+    console.log(foundResult);
   return (
     <div className="flex flex-col justify-start items-start w-full py-4">
       <input
@@ -28,10 +43,10 @@ const Search = () => {
             <Item
               key={book?.id}
               id={book?.id}
-              name={book?.name}
+              Name={book?.Name}
               status={book?.status}
               price={book?.price}
-              imgSrc={book?.imgSrc}
+              image={book?.image}
             />
           ))
         ) : (

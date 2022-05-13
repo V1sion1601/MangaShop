@@ -1,6 +1,28 @@
-import Cover86 from "../assets/TestItem.jpg";
-import CoverYuruCamp from "../assets/CoverYuruCamp.jpg";
-import Stone01 from "../assets/stone01.jpg";
+import axios from 'axios';
+import api from '../api';
+const Cover86 = "assets/TestItem.jpg";
+const CoverYuruCamp = "assets/CoverYuruCamp.jpg";
+
+// import Stone01 from "../assets/stone01.jpg";
+
+// import React, { useState } from "react";
+// class product extends React.Component {
+//   constructor(props){
+//     super(props);
+//     this.state ={
+//       products:[]
+//     }
+//   }
+//   compomentDidMount(){
+//     axios.get('http://localhost:8000/product').then(res=>{
+//       this.setState({
+//         products:res.data
+//     })
+//   });
+//   }
+// }
+// export default product;
+
 export const categoryData = [
   {
     id: 0,
@@ -16,94 +38,120 @@ export const categoryData = [
   },
 ];
 
-export const itemsDataReleased = [
-  {
-    id: 10,
-    name: "Dr.Stone",
-    cateId: 1,
-    price: 500,
-    status: 1,
-    imgSrc: Stone01,
-  },
-  {
-    id: 11,
-    name: "86: Eighty-Six",
-    cateId: 1,
-    price: 500,
-    status: 1,
-    imgSrc: Cover86,
-  },
-  {
-    id: 12,
-    name: "86: Eighty-Six",
-    cateId: 1,
-    price: 500,
-    status: 1,
-    imgSrc: Cover86,
-  },
-  {
-    id: 13,
-    name: "86: Eighty-Six",
-    cateId: 1,
-    price: 500,
-    status: 1,
-    imgSrc: Cover86,
-  },
-  {
-    id: 14,
-    name: "86: Eighty-Six",
-    cateId: 1,
-    price: 500,
-    status: 0,
-    imgSrc: Cover86,
-  },
-  {
-    id: 15,
-    name: "Yuru Camp",
-    cateId: 2,
-    price: 500,
-    status: 0,
-    imgSrc: CoverYuruCamp,
-  },
-];
+export const productbyID = async (id) => {
+  const url = "/product/detail/"+id;
+  // console.log(api.get(url, {params}));
+  return api.get(url);
+};
+export const accountbyusername = async (username,password) => {
+  const url = "/account/"+username+"/"+password;
+  // console.log(api.get(url, {params}));
+  return api.get(url);
+};
+export const accountbygoogle = async (id) => {
+  const url = "/account/"+id;
+  console.log(url);
+  // console.log(api.get(url, {params}));
+  return api.get(url);
+};
+export const customerbyID = async (id) => {
+  const url = "/cus/"+id;
+  // console.log(api.get(url, {params}));
+  return api.get(url);
+};
+export const itemsDataReleased = async () => {
+  const url = "/product";
+  // console.log(api.get(url, {params}));
+  return api.get(url, {});
+};
+//    [
+//   {
+//     id: 10,
+//     name: "Dr.Stone",
+//     cateId: 1,
+//     price: 500,
+//     status: 1,
+//     imgSrc: Stone01,
+//   },
+//   {
+//     id: 11,
+//     name: "86: Eighty-Six",
+//     cateId: 1,
+//     price: 500,
+//     status: 1,
+//     imgSrc: Cover86,
+//   },
+//   {
+//     id: 12,
+//     name: "86: Eighty-Six",
+//     cateId: 1,
+//     price: 500,
+//     status: 1,
+//     imgSrc: Cover86,
+//   },
+//   {
+//     id: 13,
+//     name: "86: Eighty-Six",
+//     cateId: 1,
+//     price: 500,
+//     status: 1,
+//     imgSrc: Cover86,
+//   },
+//   {
+//     id: 14,
+//     name: "86: Eighty-Six",
+//     cateId: 1,
+//     price: 500,
+//     status: 0,
+//     imgSrc: Cover86,
+//   },
+//   {
+//     id: 15,
+//     name: "Yuru Camp",
+//     cateId: 2,
+//     price: 500,
+//     status: 0,
+//     imgSrc: CoverYuruCamp,
+//   },
+// ];
 
-export const itemsDataTrending = [
-  {
-    id: 20,
-    name: "Yuru Camp",
-    price: 500,
-    status: 0,
-    imgSrc: CoverYuruCamp,
-  },
-  {
-    id: 21,
-    name: "Yuru Camp",
-    price: 500,
-    status: 1,
-    imgSrc: CoverYuruCamp,
-  },
-  {
-    id: 22,
-    name: "Yuru Camp",
-    price: 500,
-    status: 1,
-    imgSrc: CoverYuruCamp,
-  },
-  {
-    id: 23,
-    name: "Yuru Camp",
-    price: 500,
-    status: 1,
-    imgSrc: CoverYuruCamp,
-  },
-  {
-    id: 24,
-    name: "Yuru Camp",
-    price: 500,
-    status: 1,
-    imgSrc: CoverYuruCamp,
-  },
-];
+// export const itemsDataTrending = [
+//   {
+//     id: 20,
+//     name: "Yuru Camp",
+//     price: 500,
+//     status: 0,
+//     imgSrc: CoverYuruCamp,
+//   },
+//   {
+//     id: 21,
+//     name: "Yuru Camp",
+//     price: 500,
+//     status: 1,
+//     imgSrc: CoverYuruCamp,
+//   },
+//   {
+//     id: 22,
+//     name: "Yuru Camp",
+//     price: 500,
+//     status: 1,
+//     imgSrc: CoverYuruCamp,
+//   },
+//   {
+//     id: 23,
+//     name: "Yuru Camp",
+//     price: 500,
+//     status: 1,
+//     imgSrc: CoverYuruCamp,
+//   },
+//   {
+//     id: 24,
+//     name: "Yuru Camp",
+//     price: 500,
+//     status: 1,
+//     imgSrc: CoverYuruCamp,
+//   },
+// ];
 
 export const cartItems = [
   {

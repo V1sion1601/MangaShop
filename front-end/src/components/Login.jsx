@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 //Components
-import Image from "../assets/Wallpaper.jpg";
+// import Image from "assets/Wallpaper.jpg";
 //Library
 import { Link } from "react-router-dom";
 import { FaGoogle, FaFacebook } from "react-icons/fa";
@@ -9,7 +9,8 @@ import isEmail from "validator/lib/isEmail";
 import { useNavigate } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 import { toast } from "react-toastify";
-
+import {accountbyusername, customerbyID, accountbygoogle} from "../utils/dummyData";
+import { NULL } from "mysql/lib/protocol/constants/types";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,16 +33,65 @@ const Login = () => {
     return true;
   };
   //Submit progress
-  const submitLogin = (e) => {
+  const submitLogin = async (e) => {
     e.preventDefault();
     const isValid = validateAll();
     if (!isValid) return;
-    navigate("/", { replace: true });
+    const res = await accountbyusername(email,password);
+    console.log(res[0]?.role);
+    if(res != 6){
+        if(res[0]?.role!=1){
+        const res2 = await customerbyID(res[0]?.ID);
+        console.log(res2);
+        sessionStorage.setItem("user", JSON.stringify(res2[0]));
+        toast.success("Đăng nhập thành công!", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      navigate("/", { replace: true });
+      }
+      else if (res[0]?.role==1){
+        toast.success("Đăng nhập thành công!", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      navigate("/admin", { replace: true });
+      }
+    }
+    else {
+      toast.error("Đăng nhập không thành công", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
+      navigate("/login");
+    }
   };
   //Google response when succeed
-  const responseGoogle = (response) => {
-    sessionStorage.setItem("user", JSON.stringify(response.profileObj));
-    toast.success("Đăng nhập thành công!", {
+  const responseGoogle = async (response) => {
+    // sessionStorage.setItem("usergoogle", JSON.stringify(response.profileObj));
+    const res = await accountbygoogle((response.profileObj).googleId);
+    console.log((response.profileObj).googleId);
+    if(res != 6){
+      if(res[0]?.role!=1){
+      const res2 = await customerbyID(res[0]?.ID);
+      console.log(res2);
+      sessionStorage.setItem("user", JSON.stringify(res2[0]));
+      toast.success("Đăng nhập thành công!", {
       position: "top-right",
       autoClose: 1000,
       hideProgressBar: false,
@@ -51,6 +101,34 @@ const Login = () => {
       progress: undefined,
     });
     navigate("/", { replace: true });
+    }}
+    else if (res[0]?.role==1){
+      const res2 = await customerbyID(res[0]?.ID);
+      console.log(res2);
+      sessionStorage.setItem("user", JSON.stringify(res2[0]));
+      toast.success("Đăng nhập thành công!", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    navigate("/admin", { replace: true });
+    }
+    else {
+      toast.error("Đăng nhập không thành công", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
+      navigate("/login");
+    }
   };
   //Google response when fail
   const responseGoogleFailure = () => {
@@ -68,7 +146,7 @@ const Login = () => {
   return (
     <div className="flex justify-start items-center flex-col h-screen">
       <div className="relative w-full h-full">
-        <img src={Image} alt="" className="w-full h-full object-cover" />
+        <img src={'assets/Wallpaper.jpg'} alt="" className="w-full h-full object-cover" />
         <div className="absolute flex flex-col  rounded-md justify-center items-center bg-whiteOverlay inset-x-100 inset-y-14 ">
           <h1 className="text-4xl font-semibold font-title uppercase">
             Đăng nhập

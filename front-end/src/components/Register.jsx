@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import isEmpty from "validator/lib/isEmpty";
 import isEmail from "validator/lib/isEmail";
 import { useNavigate } from "react-router-dom";
-import Image from "../assets/Wallpaper.jpg";
+const Image = "assets/Wallpaper.jpg";
 
 const Register = () => {
   //State

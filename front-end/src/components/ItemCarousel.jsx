@@ -13,24 +13,24 @@ const ItemCarousel = ({ header, arrData }) => {
         <div className="grid grid-cols-4 mt-4 gap-4">
           {arrData.slice(0, 4).map((item) => (
             <Item
-              key={item?.id}
-              id={item?.id}
-              name={item?.name}
+              key={item?.ID}
+              ID={item?.ID}
+              Name={item?.Name}
               status={item?.status}
               price={item?.price}
-              imgSrc={item?.imgSrc}
+              image={item?.image}
             />
           ))}
         </div>
         <div className="grid grid-cols-4 mt-4 gap-4">
-          {arrData.slice(4, 8).map((item) => (
+          {arrData.slice(8, 12).map((item) => (
             <Item
-              key={item?.id}
-              id={item?.id}
-              name={item?.name}
+              key={item?.ID}
+              ID={item?.ID}
+              Name={item?.Name}
               status={item?.status}
               price={item?.price}
-              imgSrc={item?.imgSrc}
+              image={item?.image}
             />
           ))}
         </div>

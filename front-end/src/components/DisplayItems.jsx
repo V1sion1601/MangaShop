@@ -9,9 +9,9 @@ import { categoryData } from "../utils/dummyData";
 const DisplayItems = ({ cateId, arrData }) => {
   const categoryId = parseInt(cateId);
   let arrResult = useMemo(() => [], []);
-
+  console.log(arrData);
   cateId
-    ? (arrResult = arrData.filter((data) => data.cateId === categoryId))
+    ? (arrResult = arrData.filter((data) => data.ID_category === categoryId))
     : (arrResult = arrData);
   const itemsPerPage = 4;
   const [currentItems, setCurrentItems] = useState(arrResult);
@@ -32,7 +32,7 @@ const DisplayItems = ({ cateId, arrData }) => {
 
   useEffect(() => {
     let endOffset = itemOffset + itemsPerPage;
-    console.log(itemOffset);
+    // console.log(itemOffset);
     if (arrResult.slice(itemOffset, endOffset).length > 0) {
       setCurrentItems(arrResult.slice(itemOffset, endOffset));
     } else {
@@ -50,12 +50,12 @@ const DisplayItems = ({ cateId, arrData }) => {
         {currentItems.map((book) => (
           <div>
             <Item
-              key={book?.id}
-              id={book?.id}
-              name={book?.name}
+              key={book?.ID}
+              ID={book?.ID}
+              Name={book?.Name}
               status={book?.status}
               price={book?.price}
-              imgSrc={book?.imgSrc}
+              image={book?.image}
             />
           </div>
         ))}

@@ -17,7 +17,7 @@ const order_detailcontroller = {
     getorder_detailbyID: async (req,res)=>{
         try{
           order_detail.getbyId(req.params.id,function(data){
-            res.status(200).json({result:data});
+            res.status(200).json(data);
            });
         //    res.status(200).send(req.params.id);
         }catch(err){

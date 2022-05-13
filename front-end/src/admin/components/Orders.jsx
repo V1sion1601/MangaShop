@@ -92,8 +92,9 @@ const Orders = () => {
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
                   >
-                    <option value="delivery">Đang vận chuyển</option>
-                    <option value="packaging">Đang lấy hàng</option>
+                    <option value="success">Đã giao hàng</option>
+                    <option value="delivery">Đã giao cho bộ phận giao hàng</option>
+                    <option value="packaging">Chưa Xử lý</option>
                   </select>
                 </div>
               </div>

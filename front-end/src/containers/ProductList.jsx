@@ -1,19 +1,34 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Carousel } from "react-responsive-carousel";
-
+import { useEffect, useState } from "react";
 //Components
 import ItemCarousel from "../components/ItemCarousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-
-//Assets
-import Banner from "../assets/Banner.jpg";
-import Banner2 from "../assets/Banner2.jpg";
-
 //Dummy Data
 import { itemsDataReleased, itemsDataTrending } from "../utils/dummyData";
+//Assets
+const Banner = "../assets/Banner.jpg";
+const Banner2 = "../assets/Banner2.jpg";
+
+
 
 const ProductList = () => {
+  const [productList, setProductList] = useState([]);
+  useEffect(() => {
+  const fetchProductList = async () => {
+  try {
+  const params = { _page: 1, _limit: 4 };
+  const response = await itemsDataReleased(params);
+  console.log('Fetch products successfully: ', response);
+  setProductList(response);
+  console.log(productList);
+  } catch (error) {
+  console.log('Failed to fetch product list: ', error);
+  }
+  }
+  fetchProductList();
+  }, []);
   return (
     <div className="h-full space-y-4 animate-slide-in ">
       {/* Setup for Banner (Advertisement) */}
@@ -39,8 +54,8 @@ const ProductList = () => {
         </div>
       </Carousel>
       <div>
-        <ItemCarousel arrData={itemsDataReleased} header={"Vừa xuất bản"} />
-        <ItemCarousel arrData={itemsDataTrending} header={"Đang thịnh hành"} />
+        <ItemCarousel arrData={productList} header={"Vừa xuất bản"} />
+        <ItemCarousel arrData={productList} header={"Đang thịnh hành"} />
       </div>
     </div>
   );

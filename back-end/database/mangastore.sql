@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 05, 2022 at 05:50 AM
+-- Generation Time: May 13, 2022 at 02:23 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.13
 
@@ -31,16 +31,19 @@ CREATE TABLE `account` (
   `ID` int(11) NOT NULL,
   `Username` varchar(25) NOT NULL,
   `Password` int(11) NOT NULL,
-  `ID_google` int(11) DEFAULT NULL
+  `ID_google` varchar(200) DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  `role` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`ID`, `Username`, `Password`, `ID_google`) VALUES
-(1, 'hao456c', 123456, 0),
-(2, 'hao456c', 123456, NULL);
+INSERT INTO `account` (`ID`, `Username`, `Password`, `ID_google`, `status`, `role`) VALUES
+(1, 'hao456q', 123456, '12', 1, 0),
+(2, 'hao456q@gmail.com', 123456, NULL, 1, 1),
+(3, 'hao456c@gmail.com', 123456, '110843520044508299581', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -102,7 +105,7 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`ID`, `Name`, `ID_account`, `adress`, `phone`) VALUES
-(8, 'Nguyễn Hoàng Hảo', 1, 'abc', '0902030405');
+(8, 'Nguyễn Hoàng Hảo', 3, 'abc', '0902030405');
 
 -- --------------------------------------------------------
 
@@ -155,36 +158,37 @@ CREATE TABLE `product` (
   `price` int(11) NOT NULL,
   `ID_author` int(11) NOT NULL,
   `ID_publisher` int(11) NOT NULL,
-  `image` varchar(25) NOT NULL,
+  `image` varchar(100) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `ID_category` int(11) NOT NULL
+  `ID_category` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`ID`, `Name`, `price`, `ID_author`, `ID_publisher`, `image`, `status`, `ID_category`) VALUES
-(1, 'Dã ngoại thảnh thơi - Tập 1', 30000, 1, 7, '../assets/yurucamp.jpg', 1, 2),
-(2, 'Chú Thuật Hồi Chiến - Tập 1', 30000, 5, 7, '../assets/jjk01.jpg', 1, 2),
-(3, 'Dã ngoại thảnh thơi - Tập 2', 30000, 1, 7, '../assets/yurucamp02.jpg', 1, 2),
-(4, 'Chú Thuật Hồi Chiến - Tập 2', 30000, 5, 7, '../assets/jjk02.jpg', 1, 2),
-(5, 'Dr.Stone - Tập 1', 25000, 3, 7, '../assets/stone01.jpg', 1, 2),
-(6, 'Dr.Stone - Tập 2', 25000, 3, 7, '../assets/stone02.jpg', 1, 2),
-(7, 'Dr.Stone - Tập 3', 25000, 3, 7, '../assets/stone03.jpg', 1, 2),
-(8, 'Dr.Stone - Tập 4', 25000, 3, 7, '../assets/stone04.jpg', 1, 2),
-(9, 'Văn Phòng Thám Tử Quái Vật - Tập 3', 30000, 4, 8, '../assets/kemono03.jpg', 1, 2),
-(10, 'Văn Phòng Thám Tử Quái Vật - Tập 2', 30000, 4, 8, '../assets/kemono02.jpg', 1, 2),
-(11, 'Văn Phòng Thám Tử Quái Vật - Tập 1', 30000, 4, 8, '../assets/kemono01.jpg', 1, 2),
-(12, ' 86 - EIGHTY SIX - Tập 1', 104400, 2, 8, '../assets/8601.jpg', 1, 1),
-(13, ' 86 - EIGHTY SIX - Tập 2', 104400, 2, 8, '../assets/8602.jpg', 1, 1),
-(14, '86-EIGHTY SIX- Tập 3', 104400, 2, 8, '../assets/8603.jpg', 1, 1),
-(15, '86-EIGHTY SIX- Tập 4', 104400, 2, 8, '../assets/8604.jpg', 1, 1),
-(16, 'Dr.Stone - Tập 5', 25000, 3, 7, '../assets/stone05.jpg', 1, 2),
-(17, 'Dr.Stone - Tập 6', 25000, 3, 7, '../assets/stone06.jpg', 1, 2),
-(18, 'Dr.Stone - Tập 7', 25000, 3, 7, '../assets/stone07.jpg', 1, 2),
-(19, 'Dr.Stone - Tập 8', 25000, 3, 7, '../assets/stone08.jpg', 1, 2),
-(20, 'Dr.Stone - Tập 9', 25000, 3, 7, '../assets/stone09.jpg', 1, 2);
+INSERT INTO `product` (`ID`, `Name`, `price`, `ID_author`, `ID_publisher`, `image`, `status`, `ID_category`, `quantity`) VALUES
+(1, 'Dã ngoại thảnh thơi - Tập 1', 30000, 1, 7, 'yurucamp02.jpg', 1, 2, 20),
+(2, 'Chú Thuật Hồi Chiến - Tập 1', 30000, 5, 7, 'jjk01.jpg', 1, 2, 20),
+(3, 'Dã ngoại thảnh thơi - Tập 2', 30000, 1, 7, 'yurucamp02.jpg', 1, 2, 20),
+(4, 'Chú Thuật Hồi Chiến - Tập 2', 30000, 5, 7, 'jjk02.jpg', 1, 2, 20),
+(5, 'Dr.Stone - Tập 1', 25000, 3, 7, 'stone01.jpg', 1, 2, 20),
+(6, 'Dr.Stone - Tập 2', 25000, 3, 7, 'stone02.jpg', 1, 2, 20),
+(7, 'Dr.Stone - Tập 3', 25000, 3, 7, 'stone03.jpg', 1, 2, 20),
+(8, 'Dr.Stone - Tập 4', 25000, 3, 7, 'stone04.jpg', 1, 2, 20),
+(9, 'Văn Phòng Thám Tử Quái Vật - Tập 3', 30000, 4, 8, 'kemono03.jpg', 1, 2, 20),
+(10, 'Văn Phòng Thám Tử Quái Vật - Tập 2', 30000, 4, 8, 'kemono02.jpg', 1, 2, 20),
+(11, 'Văn Phòng Thám Tử Quái Vật - Tập 1', 30000, 4, 8, 'kemono01.jpg', 1, 2, 20),
+(12, ' 86 - EIGHTY SIX - Tập 1', 104400, 2, 8, '8601.jpg', 1, 1, 20),
+(13, ' 86 - EIGHTY SIX - Tập 2', 104400, 2, 8, '8602.jpg', 1, 1, 20),
+(14, '86-EIGHTY SIX- Tập 3', 104400, 2, 8, '8603.jpg', 1, 1, 20),
+(15, '86-EIGHTY SIX- Tập 4', 104400, 2, 8, '8604.jpg', 1, 1, 20),
+(16, 'Dr.Stone - Tập 5', 25000, 3, 7, 'stone05.jpg', 1, 2, 20),
+(17, 'Dr.Stone - Tập 6', 25000, 3, 7, 'stone06.jpg', 1, 2, 20),
+(18, 'Dr.Stone - Tập 7', 25000, 3, 7, 'stone07.jpg', 1, 2, 20),
+(19, 'Dr.Stone - Tập 8', 25000, 3, 7, 'stone08.jpg', 1, 2, 20),
+(20, 'Dr.Stone - Tập 9', 25000, 3, 7, 'stone09.jpg', 1, 2, 20);
 
 -- --------------------------------------------------------
 
@@ -214,10 +218,11 @@ INSERT INTO `publisher` (`ID`, `Name`, `Address`, `Phone`) VALUES
 --
 
 CREATE TABLE `sale` (
-  `ID` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `Percent` int(11) NOT NULL,
   `Require` int(11) NOT NULL,
-  `description` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL
+  `date_start` date NOT NULL,
+  `date_finish` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -282,7 +287,7 @@ ALTER TABLE `publisher`
 -- Indexes for table `sale`
 --
 ALTER TABLE `sale`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -292,7 +297,7 @@ ALTER TABLE `sale`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `author`
@@ -334,7 +339,7 @@ ALTER TABLE `publisher`
 -- AUTO_INCREMENT for table `sale`
 --
 ALTER TABLE `sale`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

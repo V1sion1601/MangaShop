@@ -5,9 +5,9 @@ import isMobilePhone from "validator/lib/isMobilePhone";
 const Profile = () => {
   //For google (only using session is enough)
   const user = JSON.parse(sessionStorage.getItem("user"));
-  const [editName, setEditName] = useState(user.name);
-  const [editPhone, setEditPhone] = useState("");
-  const [editAddress, setEditAddress] = useState("");
+  const [editName, setEditName] = useState(user.Name);
+  const [editPhone, setEditPhone] = useState(user.phone);
+  const [editAddress, setEditAddress] = useState(user.adress);
   const [errors, setErrors] = useState({});
 
   const validateAll = () => {

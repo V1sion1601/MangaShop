@@ -161,7 +161,7 @@ const AddProduct = () => {
                   <td>
                     <img className="h-36 py-2" src={item.image} alt="demo" />
                   </td>
-                  <td>{item.name}</td>
+                  <td>{item.Name}</td>
                   <td>{`${item.price} VNĐ`}</td>
                   <td>{item.quantity}</td>
                 </tr>

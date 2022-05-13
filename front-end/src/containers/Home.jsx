@@ -73,7 +73,7 @@ const Home = () => {
             <div onClick={() => setHover(!hover)}>
               <HiUserCircle fontSize={30} className="cursor-pointer inline " />
               <span className="pl-3 font-serif relative cursor-pointer">
-                {`${user?.name ? user?.name : "Xin chào User"}`}
+                {`${user?.Name ? user?.Name : "Xin chào User"}`}
               </span>
 
               {/*Check user and hover variable*/}
@@ -82,7 +82,7 @@ const Home = () => {
                   <ul className="cursor-pointer space-y-2">
                     <li className="border-b">
                       <CgProfile className="inline-block mr-3" />
-                      <Link to={`/profile/${user.googleId}`}>
+                      <Link to={`/profile/${user.ID}`}>
                         Trang cá nhân
                       </Link>
                     </li>

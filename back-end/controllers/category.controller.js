@@ -19,7 +19,7 @@ const categorycontroller = {
             // const categorylist = await category.get_all();
             // res.status(200).json(categorylist);
             category.get_all(function(data){
-                res.status(200).json({result:data});
+                res.status(200).json(data);
             });
         }catch(err){
             res.status(500).json(err);
@@ -30,7 +30,7 @@ const categorycontroller = {
     getcategorybyID: async (req,res)=>{
         try{
           category.getbyId(req.params.id,function(data){
-            res.status(200).json({result:data});
+            res.status(200).json(data);
            });
         //    res.status(200).send(req.params.id);
         }catch(err){

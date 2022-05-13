@@ -4,7 +4,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Admin from "./admin/containers/Admin";
 import Home from "./containers/Home";
-
+import axios from "axios";
 const App = () => {
   return (
     <Routes>
@@ -16,5 +16,8 @@ const App = () => {
     </Routes>
   );
 };
-
+// axios.get('http://localhost:8000/product')
+// .then(res=>{
+//   console.log(res.data);
+// });
 export default App;

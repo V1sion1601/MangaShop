@@ -19,7 +19,7 @@ const productcontroller = {
             // const productlist = await product.get_all();
             // res.status(200).json(productlist);
             product.get_all(function(data){
-                res.status(200).json({result:data});
+                res.status(200).json(data);
             });
         }catch(err){
             res.status(500).json(err);
@@ -30,7 +30,7 @@ const productcontroller = {
     getproductbyID: async (req,res)=>{
         try{
           product.getbyId(req.params.id,function(data){
-            res.status(200).json({result:data});
+            res.status(200).json(data);
            });
         //    res.status(200).send(req.params.id);
         }catch(err){

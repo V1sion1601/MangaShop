@@ -7,6 +7,8 @@ router.post("/", accountcontroller.addaccount);
 //get allaccount
 router.get("/", accountcontroller.getallaccount);
 //getaccountbyID
-router.get("/:id", accountcontroller.getaccountbyID);
+router.get("/:id/:password", accountcontroller.getaccountbyID);
+//getaccountbygoogle
+router.get("/:idgoogle", accountcontroller.getaccountbyIDgoogle);
 
 module.exports = router;

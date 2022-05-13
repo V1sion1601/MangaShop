@@ -11,6 +11,7 @@ const product = function(product){
     this.image = product.image;
     this.status = product.status;
     this.ID_category = product.ID_category;
+    this.quantity = product.quantity
 }
 product.get_all = function(result){
     db.query("SELECT * FROM product", function(err, product){
