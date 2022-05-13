@@ -6,17 +6,23 @@ import { toast } from "react-toastify";
 const Cart = () => {
   const navigate = useNavigate();
   const user = JSON.parse(sessionStorage.getItem("user"));
+  const orders = JSON.parse(sessionStorage.getItem("cart"));
 
-  let totalPrice = cartItems.reduce((prev, curr) => prev.price + curr.price);
-  let totalQuantity = cartItems.reduce(
-    (prev, curr) => prev.quantity + curr.quantity
-  );
+  let totalQuantity = 0,
+    totalPrice = 0;
+  orders.map((order, index) => {
+    console.log(order);
+    totalQuantity += parseInt(order.quantity);
+    totalPrice += parseInt(order.quantity) * parseInt(order.price);
+  });
+
   const handlePayment = () => {
+    sessionStorage.removeItem("cart");
     toast.success(
       "Bạn đã thanh toán thành công, vui lòng hãy chờ để được xử lý quá trình thanh toán"
     );
     setTimeout(() => {
-      navigate(`/profile/${user?.googleId}`);
+      navigate(`/profile/${user?.googleId}`, { replace: true });
     }, 2500);
   };
 
@@ -37,22 +43,22 @@ const Cart = () => {
             </tr>
           </thead>
           <tbody>
-            {cartItems.map((item) => (
+            {orders.map((item) => (
               <tr
                 className="text-left border-b border-indigo-200 "
-                key={item.id}
+                key={item.ID}
               >
-                <td>{item.id}</td>
+                <td>{item.ID}</td>
                 <td>
                   <img
                     className="w-50 h-40"
-                    src={item.image}
-                    alt={`img-${item.id}`}
+                    src={`/assets/${item?.image}`}
+                    alt={`img-${item.ID}`}
                   />
                 </td>
-                <td>{item.name}</td>
+                <td>{item.Name}</td>
                 <td>{item.quantity}</td>
-                <td>{`$${item.price}`}</td>
+                <td>{`${item.price} VND`}</td>
               </tr>
             ))}
           </tbody>

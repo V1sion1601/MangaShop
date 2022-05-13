@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 //Dummy Data
-import { itemsDataReleased,product } from "../utils/dummyData";
+import { itemsDataReleased } from "../utils/dummyData";
 //Components
 import Item from "./Item";
 import Error from "./Error";
@@ -10,16 +10,16 @@ const Search = () => {
   console.log(search);
   const [productList, setProductList] = useState([]);
   useEffect(() => {
-  const fetchProductList = async () => {
-  try {
-  const response = await itemsDataReleased();
-  setProductList(response);
-  console.log(productList);
-  } catch (error) {
-  console.log('Failed to fetch product list: ', error);
-  }
-  }
-  fetchProductList();
+    const fetchProductList = async () => {
+      try {
+        const response = await itemsDataReleased();
+        setProductList(response);
+        console.log(productList);
+      } catch (error) {
+        console.log("Failed to fetch product list: ", error);
+      }
+    };
+    fetchProductList();
   }, []);
   let foundResult = [];
   search === ""
@@ -27,7 +27,7 @@ const Search = () => {
     : (foundResult = productList.filter((data) =>
         data.Name.toLowerCase().includes(search.toLowerCase())
       ));
-    console.log(foundResult);
+  console.log(foundResult);
   return (
     <div className="flex flex-col justify-start items-start w-full py-4">
       <input
@@ -41,8 +41,8 @@ const Search = () => {
         {foundResult.length > 0 ? (
           foundResult.map((book) => (
             <Item
-              key={book?.id}
-              id={book?.id}
+              key={book?.ID}
+              ID={book?.ID}
               Name={book?.Name}
               status={book?.status}
               price={book?.price}

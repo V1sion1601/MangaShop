@@ -13,17 +13,17 @@ const Shop = () => {
   const [productList, setProductList] = useState([]);
 
   useEffect(() => {
-  const fetchProductList = async () => {
-  try {
-  const response = await itemsDataReleased();
-  console.log('Fetch products successfully: ', response);
-  setProductList(response);
-  console.log(productList);
-  } catch (error) {
-  console.log('Failed to fetch product list: ', error);
-  }
-  }
-  fetchProductList();
+    const fetchProductList = async () => {
+      try {
+        const response = await itemsDataReleased();
+        console.log("Fetch products successfully: ", response);
+        setProductList(response);
+        console.log(productList);
+      } catch (error) {
+        console.log("Failed to fetch product list: ", error);
+      }
+    };
+    fetchProductList();
   }, []);
   console.log(productList);
   return (
