@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { numberWithComma } from "../utils/dummyData";
 const Item = ({ ID, Name, price, status, image }) => {
   console.log(ID);
   return (
@@ -12,7 +12,10 @@ const Item = ({ ID, Name, price, status, image }) => {
         {Name}
       </header>
       <p className="mt-2">
-        Giá: <span className="text-indigo-500 font-bold">{`${price} VNĐ`}</span>
+        Giá:{" "}
+        <span className="text-indigo-500 font-bold">{`${numberWithComma(
+          price
+        )} VNĐ`}</span>
       </p>
       <p className="mb-3 pb-2">
         Tình trạng:

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { numberWithComma } from "../utils/dummyData";
 import Error from "./Error";
+import { BiTrashAlt } from "react-icons/bi";
 const Cart = () => {
   const navigate = useNavigate();
   const user = JSON.parse(sessionStorage.getItem("user"));
@@ -41,6 +42,7 @@ const Cart = () => {
   const handleIncrement = (index) => {
     quantity[index]++;
     orders[index].quantity = quantity[index];
+    sessionStorage.setItem("cart", JSON.stringify(orders));
     setQuantityProduct(quantity);
   };
   const handleDecrement = (index) => {
@@ -49,9 +51,20 @@ const Cart = () => {
       quantity[index] = 1;
     }
     orders[index].quantity = quantity[index];
+    sessionStorage.setItem("cart", JSON.stringify(orders));
+
     setQuantityProduct(quantity);
   };
 
+  const handleDelete = (index) => {
+    const decision = window.confirm("Bạn có xóa sản phẩm này không?");
+    if (decision) {
+      orders.splice(index, 1);
+      sessionStorage.setItem("cart", JSON.stringify(orders));
+      alert("Xóa thành công");
+      navigate("/cart");
+    }
+  };
   return (
     <div className="h-full w-full">
       <header className="text-4xl text-indigo-400 font-semibold tracking-wide uppercase">
@@ -68,6 +81,7 @@ const Cart = () => {
                   <th>Tên</th>
                   <th>Số lượng</th>
                   <th>Giá tiền</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -105,6 +119,11 @@ const Cart = () => {
                       <td>{`${numberWithComma(
                         item.price * item.quantity
                       )} VNĐ`}</td>
+                      <td>
+                        <button onClick={() => handleDelete(index)}>
+                          <BiTrashAlt fontSize={40} />
+                        </button>
+                      </td>
                     </tr>
                   </>
                 ))}
