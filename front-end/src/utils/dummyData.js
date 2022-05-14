@@ -1,7 +1,11 @@
-import axios from 'axios';
-import api from '../api';
+import axios from "axios";
+import api from "../api";
 const Cover86 = "assets/TestItem.jpg";
 const CoverYuruCamp = "assets/CoverYuruCamp.jpg";
+
+export const numberWithComma = (num) => {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
 
 // import Stone01 from "../assets/stone01.jpg";
 
@@ -39,23 +43,23 @@ export const categoryData = [
 ];
 
 export const productbyID = async (id) => {
-  const url = "/product/detail/"+id;
+  const url = "/product/detail/" + id;
   // console.log(api.get(url, {params}));
   return api.get(url);
 };
-export const accountbyusername = async (username,password) => {
-  const url = "/account/"+username+"/"+password;
+export const accountbyusername = async (username, password) => {
+  const url = "/account/" + username + "/" + password;
   // console.log(api.get(url, {params}));
   return api.get(url);
 };
 export const accountbygoogle = async (id) => {
-  const url = "/account/"+id;
+  const url = "/account/" + id;
   console.log(url);
   // console.log(api.get(url, {params}));
   return api.get(url);
 };
 export const customerbyID = async (id) => {
-  const url = "/cus/"+id;
+  const url = "/cus/" + id;
   // console.log(api.get(url, {params}));
   return api.get(url);
 };

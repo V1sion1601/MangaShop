@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Item = ({ ID, Name, price, status, image }) => {
   console.log(ID);
   return (
-    <div className="mb-3 flex flex-col justify-center items-center shadow-md shadow-gray-400 border border-indigo-200 hover:-translate-y-1 transform transition">
+    <div className="mb-3 flex flex-col justify-center items-center shadow-md shadow-gray-400 border border-indigo-200 hover:-translate-y-1 transform transition h-full">
       <div className="mt-4">
         <img className="w-auto h-64" src={`/assets/${image}`} alt={Name} />
       </div>
