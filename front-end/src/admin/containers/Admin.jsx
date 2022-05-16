@@ -19,12 +19,14 @@ import Orders from "../components/Orders";
 import Accounts from "../components/Accounts";
 import Sales from "../components/Sales";
 import Categories from "../components/Categories";
+import OrderDetail from "../components/OrderDetail";
 const Admin = () => {
   const { pathname } = useLocation();
   const [hover, setHover] = useState(false);
   const navigate = useNavigate();
   const user = JSON.parse(sessionStorage.getItem("user"));
-
+  const idOrder = pathname.slice(14);
+  console.log(idOrder);
   console.log(pathname);
   return (
     <>
@@ -140,6 +142,10 @@ const Admin = () => {
           {pathname === "/admin/accounts" && <Accounts />}
           {pathname === "/admin/sales" && <Sales />}
           {pathname === "/admin/categories" && <Categories />}
+          {pathname === "/admin/detail" && <OrderDetail id={pathname} />}
+          {pathname === `/admin/detail/${idOrder}` && (
+            <OrderDetail id={idOrder} />
+          )}
         </div>
       </div>
     </>

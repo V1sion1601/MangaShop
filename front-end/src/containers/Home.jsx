@@ -49,7 +49,7 @@ const Home = () => {
                 className={pathname === "/shop/0" && "font-semibold"}
                 to="/shop/0"
               >
-                Cửa hàng
+                Sản phẩm
               </NavLink>
             </div>
           </div>
@@ -82,9 +82,7 @@ const Home = () => {
                   <ul className="cursor-pointer space-y-2">
                     <li className="border-b">
                       <CgProfile className="inline-block mr-3" />
-                      <Link to={`/profile/${user.ID}`}>
-                        Trang cá nhân
-                      </Link>
+                      <Link to={`/profile/${user.ID}`}>Trang cá nhân</Link>
                     </li>
                     <li
                       className="border-b"

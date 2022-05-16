@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
 //Dummy data
 import { orderItems } from "../../utils/dummyData";
+
 const Orders = () => {
   const showForm = `absolute px-12 flex flex-col z-10 justify-center items-center top-0 bottom-0 left-0 right-0 bg-blackOverlay`;
   const [toggleForm, setToggleForm] = useState(false);
@@ -10,8 +12,9 @@ const Orders = () => {
   const [quantity, setQuantity] = useState("");
   const [status, setStatus] = useState("");
 
+  const navigate = useNavigate();
   const handleConfirm = (id) => {
-    alert(`Cập nhật đơn hàng mã: ${id}`);
+    navigate(`/admin/detail/${id}`);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -93,7 +96,9 @@ const Orders = () => {
                     onChange={(e) => setStatus(e.target.value)}
                   >
                     <option value="success">Đã giao hàng</option>
-                    <option value="delivery">Đã giao cho bộ phận giao hàng</option>
+                    <option value="delivery">
+                      Đã giao cho bộ phận giao hàng
+                    </option>
                     <option value="packaging">Chưa Xử lý</option>
                   </select>
                 </div>
@@ -138,13 +143,13 @@ const Orders = () => {
               </td>
               <td className="p-7">
                 <button
-                  onClick={() => handleDetail(item.id)}
+                  onClick={() => handleConfirm(item.id)}
                   className="mr-5 bg-green-500 text-white rounded-md shadow-lg font-bold uppercase px-5 py-3 hover:bg-green-400 hover:-translate-y-0.5 transform transition active:ring-1 active:ring-offset-4"
                 >
                   Chi tiết
                 </button>
                 <button
-                  onClick={() => handleConfirm(item.id)}
+                  onClick={() => handleDetail(item.id)}
                   className="bg-red-500 text-white rounded-md shadow-lg font-bold uppercase px-5 py-3 hover:bg-red-400 hover:-translate-y-0.5 transform transition active:ring-1 active:ring-offset-4"
                 >
                   Xác nhận
