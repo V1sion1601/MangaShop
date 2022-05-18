@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 13, 2022 at 02:23 PM
+-- Generation Time: May 18, 2022 at 05:31 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.13
 
@@ -43,7 +43,21 @@ CREATE TABLE `account` (
 INSERT INTO `account` (`ID`, `Username`, `Password`, `ID_google`, `status`, `role`) VALUES
 (1, 'hao456q', 123456, '12', 1, 0),
 (2, 'hao456q@gmail.com', 123456, NULL, 1, 1),
-(3, 'hao456c@gmail.com', 123456, '110843520044508299581', 1, 0);
+(3, 'hao456c@gmail.com', 123456, '110843520044508299581', 1, 0),
+(5, 'hao4561', 123456, NULL, 1, 0),
+(7, 'hao456q', 123456, NULL, 1, 0),
+(9, 'hao456ca@gmail.com', 1234567, '', 1, 0),
+(10, 'hao456s@gmail.com', 123456, NULL, 1, 0),
+(11, 'hao456sa@gmail.com', 123456, NULL, 1, 0),
+(12, 'hao456saa@gmail.com', 123456, NULL, 1, 0),
+(13, 'hao456saaa@gmail.com', 123456, NULL, 1, 0),
+(14, 'hao456saaas@gmail.com', 123456, NULL, 1, 0),
+(15, 'hao456sasaas@gmail.com', 123456, NULL, 1, 0),
+(16, 'hao456abc@gmail.com', 123456, NULL, 1, 0),
+(17, 'hao456l@gmail.com', 123456, NULL, 0, 0),
+(18, 'hao123@gmail.com', 123456, NULL, 1, 0),
+(19, 'hao4561@gmail.com', 123456, NULL, 1, 0),
+(20, 'hao45w61@gmail.com', 123456, NULL, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -75,16 +89,18 @@ INSERT INTO `author` (`ID`, `Name`) VALUES
 
 CREATE TABLE `category` (
   `ID` int(11) NOT NULL,
-  `Name` varchar(50) NOT NULL
+  `Name` varchar(50) NOT NULL,
+  `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `category`
 --
 
-INSERT INTO `category` (`ID`, `Name`) VALUES
-(1, 'Light Novel'),
-(2, 'Manga');
+INSERT INTO `category` (`ID`, `Name`, `status`) VALUES
+(1, 'Light Novel', 0),
+(2, 'Manga', 0),
+(6, 'văn phòng phẩm', 1);
 
 -- --------------------------------------------------------
 
@@ -105,7 +121,13 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`ID`, `Name`, `ID_account`, `adress`, `phone`) VALUES
-(8, 'Nguyễn Hoàng Hảo', 3, 'abc', '0902030405');
+(8, 'Nguyễn Hoàng Hảo', 3, '20/9a Thới Tây ', '092038071'),
+(21, 'Lâm Thiên Bảo', 5, 'abc', '0902380717'),
+(22, 'Nguyễn Hoàng Hảo', 16, '123456', '123456789'),
+(23, 'Nguyễn Hoàng Hảo', 17, '21342131', '0909090'),
+(24, 'Nguyễn Hoàng Hảo ', 18, 'abcabcbac', '09090909'),
+(25, 'Nguyễn Hoàng Hảo', 19, 'abcabca', '012932019'),
+(26, 'Nguyễn Hoàng Hảo', 20, 'abcabca', '012932019');
 
 -- --------------------------------------------------------
 
@@ -117,15 +139,20 @@ CREATE TABLE `order` (
   `ID` int(11) NOT NULL,
   `price` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `ID_customer` int(11) NOT NULL
+  `ID_customer` int(11) NOT NULL,
+  `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `order`
 --
 
-INSERT INTO `order` (`ID`, `price`, `quantity`, `ID_customer`) VALUES
-(2, 30000, 1, 8);
+INSERT INTO `order` (`ID`, `price`, `quantity`, `ID_customer`, `status`) VALUES
+(2, 30000, 1, 8, 1),
+(9, 210000, 7, 8, 2),
+(10, 210000, 7, 8, 0),
+(11, 109200, 7, 8, 2),
+(12, 210000, 7, 8, 0);
 
 -- --------------------------------------------------------
 
@@ -144,7 +171,14 @@ CREATE TABLE `orderdetail` (
 --
 
 INSERT INTO `orderdetail` (`ID_order`, `ID_product`, `quantity`) VALUES
-(2, 12, 23);
+(2, 12, 23),
+(9, 11, 1),
+(10, 11, 1),
+(10, 10, 6),
+(11, 10, 6),
+(11, 11, 1),
+(12, 10, 6),
+(12, 11, 1);
 
 -- --------------------------------------------------------
 
@@ -169,26 +203,27 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`ID`, `Name`, `price`, `ID_author`, `ID_publisher`, `image`, `status`, `ID_category`, `quantity`) VALUES
-(1, 'Dã ngoại thảnh thơi - Tập 1', 30000, 1, 7, 'yurucamp02.jpg', 1, 2, 20),
-(2, 'Chú Thuật Hồi Chiến - Tập 1', 30000, 5, 7, 'jjk01.jpg', 1, 2, 20),
-(3, 'Dã ngoại thảnh thơi - Tập 2', 30000, 1, 7, 'yurucamp02.jpg', 1, 2, 20),
-(4, 'Chú Thuật Hồi Chiến - Tập 2', 30000, 5, 7, 'jjk02.jpg', 1, 2, 20),
-(5, 'Dr.Stone - Tập 1', 25000, 3, 7, 'stone01.jpg', 1, 2, 20),
-(6, 'Dr.Stone - Tập 2', 25000, 3, 7, 'stone02.jpg', 1, 2, 20),
-(7, 'Dr.Stone - Tập 3', 25000, 3, 7, 'stone03.jpg', 1, 2, 20),
-(8, 'Dr.Stone - Tập 4', 25000, 3, 7, 'stone04.jpg', 1, 2, 20),
-(9, 'Văn Phòng Thám Tử Quái Vật - Tập 3', 30000, 4, 8, 'kemono03.jpg', 1, 2, 20),
-(10, 'Văn Phòng Thám Tử Quái Vật - Tập 2', 30000, 4, 8, 'kemono02.jpg', 1, 2, 20),
-(11, 'Văn Phòng Thám Tử Quái Vật - Tập 1', 30000, 4, 8, 'kemono01.jpg', 1, 2, 20),
-(12, ' 86 - EIGHTY SIX - Tập 1', 104400, 2, 8, '8601.jpg', 1, 1, 20),
-(13, ' 86 - EIGHTY SIX - Tập 2', 104400, 2, 8, '8602.jpg', 1, 1, 20),
-(14, '86-EIGHTY SIX- Tập 3', 104400, 2, 8, '8603.jpg', 1, 1, 20),
-(15, '86-EIGHTY SIX- Tập 4', 104400, 2, 8, '8604.jpg', 1, 1, 20),
-(16, 'Dr.Stone - Tập 5', 25000, 3, 7, 'stone05.jpg', 1, 2, 20),
-(17, 'Dr.Stone - Tập 6', 25000, 3, 7, 'stone06.jpg', 1, 2, 20),
-(18, 'Dr.Stone - Tập 7', 25000, 3, 7, 'stone07.jpg', 1, 2, 20),
-(19, 'Dr.Stone - Tập 8', 25000, 3, 7, 'stone08.jpg', 1, 2, 20),
-(20, 'Dr.Stone - Tập 9', 25000, 3, 7, 'stone09.jpg', 1, 2, 20);
+(1, 'Dã ngoại thảnh thơi - Tập 1', 30000, 1, 7, 'yurucamp02.jpg', 0, 2, 41),
+(2, 'Chú Thuật Hồi Chiến - Tập 1', 30000, 5, 7, 'jjk01.jpg', 0, 2, 30),
+(3, 'Dã ngoại thảnh thơi - Tập 2', 30000, 1, 7, 'yurucamp02.jpg', 0, 2, 20),
+(4, 'Chú Thuật Hồi Chiến - Tập 2', 30000, 5, 7, 'jjk02.jpg', 0, 2, 20),
+(5, 'Dr.Stone - Tập 1', 25000, 3, 7, 'stone01.jpg', 0, 2, 20),
+(6, 'Dr.Stone - Tập 2', 25000, 3, 7, 'stone02.jpg', 0, 2, 20),
+(7, 'Dr.Stone - Tập 3', 25000, 3, 7, 'stone03.jpg', 0, 2, 20),
+(8, 'Dr.Stone - Tập 4', 25000, 3, 7, 'stone04.jpg', 0, 2, 20),
+(9, 'Văn Phòng Thám Tử Quái Vật - Tập 3', 30000, 4, 8, 'kemono03.jpg', 0, 2, 20),
+(10, 'Văn Phòng Thám Tử Quái Vật - Tập 2', 30000, 4, 8, 'kemono02.jpg', 0, 2, 8),
+(11, 'Văn Phòng Thám Tử Quái Vật - Tập 1', 30000, 4, 8, 'kemono01.jpg', 0, 2, 14),
+(12, ' 86 - EIGHTY SIX - Tập 1', 104400, 2, 8, '8601.jpg', 0, 1, 20),
+(13, ' 86 - EIGHTY SIX - Tập 2', 104400, 2, 8, '8602.jpg', 0, 1, 20),
+(14, '86-EIGHTY SIX- Tập 3', 104400, 2, 8, '8603.jpg', 0, 1, 20),
+(15, '86-EIGHTY SIX- Tập 4', 104400, 2, 8, '8604.jpg', 0, 1, 20),
+(16, 'Dr.Stone - Tập 5', 25000, 3, 7, 'stone05.jpg', 0, 2, 20),
+(17, 'Dr.Stone - Tập 6', 25000, 3, 7, 'stone06.jpg', 0, 2, 20),
+(18, 'Dr.Stone - Tập 7', 25000, 3, 7, 'stone07.jpg', 0, 2, 20),
+(19, 'Dr.Stone - Tập 8', 25000, 3, 7, 'stone08.jpg', 0, 2, 20),
+(20, 'Dr.Stone - Tập 9', 25000, 3, 7, 'stone09.jpg', 0, 2, 20),
+(24, 'Dã ngoại Thảnh Thơi - Tập 7', 30000, 1, 7, 'yurucamp.jpg', 0, 1, 123);
 
 -- --------------------------------------------------------
 
@@ -221,9 +256,19 @@ CREATE TABLE `sale` (
   `id` int(11) NOT NULL,
   `Percent` int(11) NOT NULL,
   `Require` int(11) NOT NULL,
-  `date_start` date NOT NULL,
-  `date_finish` date NOT NULL
+  `date_start` varchar(10) NOT NULL,
+  `date_finish` varchar(10) NOT NULL,
+  `Name` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sale`
+--
+
+INSERT INTO `sale` (`id`, `Percent`, `Require`, `date_start`, `date_finish`, `Name`) VALUES
+(3, 0, 0, '2022-05-10', '2022-05-20', 'Mã khuyến mãi 1'),
+(31, 30, 100000, '2022-05-10', '2022-05-21', 'Mã khuyến mãi 2'),
+(32, 30, 100000, '2022-05-10', '2022-05-20', 'Mã khuyến mãi 12');
 
 --
 -- Indexes for dumped tables
@@ -297,7 +342,7 @@ ALTER TABLE `sale`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `author`
@@ -309,25 +354,25 @@ ALTER TABLE `author`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `publisher`
@@ -339,7 +384,7 @@ ALTER TABLE `publisher`
 -- AUTO_INCREMENT for table `sale`
 --
 ALTER TABLE `sale`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Constraints for dumped tables
