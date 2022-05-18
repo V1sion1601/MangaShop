@@ -36,6 +36,28 @@ const ordercontroller = {
         }catch(err){
             res.status(500).json(err);
         }
+    },
+    //createorder
+    createorder: async (req,res)=>{
+        try {
+            order.create(req.params.id,req.params.price,req.params.quantity,function(data){
+                res.status(200).json(data);
+            });
+            
+            } catch (error) {
+            res.status(500).json(err);
+        }
+    },
+    //updateorder
+    updateorder: async (req,res)=>{
+        try {
+
+            order.update(req.params.id,req.params.status,function(data){
+                res.status(200).json(data);
+            });
+        } catch (error) {
+            res.status(500).json(err);
+        }
     }
 }
 module.exports = ordercontroller;

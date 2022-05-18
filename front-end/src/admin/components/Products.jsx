@@ -1,20 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom";
 //Dummy data
 import isEmpty from "validator/lib/isEmpty";
 import isInt from "validator/lib/isInt";
-import { checkItems } from "../../utils/dummyData";
+import { checkItems, itemsDataReleased,numberWithComma,deleteproduct,createproduct } from "../../utils/dummyData";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 const Products = () => {
   const showForm = `absolute px-12 flex flex-col  justify-center items-center top-0 bottom-0 left-0 right-0 bg-blackOverlay`;
-  const [checkbox, setCheckbox] = useState(
-    checkItems.map((item) => {
-      return {
-        id: item.id,
-        status: false,
-      };
-    })
-  );
   const [toggleForm, setToggleForm] = useState(false);
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -22,35 +14,55 @@ const Products = () => {
   const [quantity, setQuantity] = useState("");
   const [image, setImage] = useState("");
   const [errors, setErrors] = useState({});
+  const [productList, setProductList] = useState([]);
+  const [checkbox, setCheckbox] = useState([]);
+  useEffect(() => {
+    const fetchProductList = async () => {
+      try {
+        const response = await itemsDataReleased();
+        console.log("Fetch products successfully: ", response);
+        setProductList(response);
+        setCheckbox(response);
+      } catch (error) {
+        console.log("Failed to fetch product list: ", error);
+      }
+    };
+    fetchProductList();
+  }, []);
   const handleCheckbox = (id) => {
-    const arrChecked = checkbox.map((item) => {
+    console.log(id);
+    console.log(checkbox);
+    const arrChecked = productList.map((item) => {
       return {
-        id: item.id,
-        status: id === item.id ? !item.status : item.status,
+        ID: item.ID,
+        Name: item.Name,
+        price: item.price,
+        image: item.image,
+        quantity: item.quantity,
+        status: id === item.ID ? !item.status : item.status,
       };
     });
 
-    setCheckbox(arrChecked);
+    setProductList(arrChecked);
   };
-  const handleDeleteBtn = () => {
-    let checked = checkbox.filter((item) => item.status === true);
+  const handleDeleteBtn =  () => {
+    let checked = productList.filter((item) => item.status === true);
     if (checked.length > 0) {
       let confirm =
-        window.confirm(`Bạn có chắc xóa những vật phẩm có ${checked.map(
+        window.confirm(`Bạn có chắc xóa những thể loại có ${checked.map(
           (item) => {
-            return `id: ${item.id} `;
+            return `id: ${item.ID} `;
+            
           }
         )} không?
       `);
-      confirm && alert("Xóa thành công");
+      confirm && checked.map((item)=>{  deleteproduct(item.ID)}) &&alert("Xóa thành công") ;
     } else {
       alert("Không có gì để xóa");
     }
   };
-
   const validateAll = () => {
     const msg = {};
-
     if (isEmpty(name)) {
       msg.name = "Mời bạn nhập lại tên";
     }
@@ -76,6 +88,7 @@ const Products = () => {
     e.preventDefault();
     const isValid = validateAll();
     if (isValid) {
+      createproduct(name,price,quantity,image.replace(/^.*[\\\/]/, ''));
       alert("Thành công");
       //navigate("/admin/products");
       setToggleForm(false);
@@ -204,21 +217,21 @@ const Products = () => {
           <td>Xóa</td>
         </thead>
         <tbody>
-          {checkItems.map((item, index) => (
+          {productList.map((item, index) => (
             <tr key={index} className="border-b-2   border-gray-300">
-              <td>{item.id}</td>
+              <td>{item.ID}</td>
               <td>
-                <img className="h-44 py-2" src={item.image} alt="demo" />
+                <img className="h-44 py-2" src={`/assets/${item.image}`} alt="demo" />
               </td>
-              <td>{item.name}</td>
-              <td>{`${item.price} VNĐ`}</td>
+              <td>{item.Name}</td>
+              <td>{`${numberWithComma(item.price)} VNĐ`}</td>
               <td>{item.quantity}</td>
               <td>
                 <input
                   type="checkbox"
-                  name={item.name}
-                  checked={checkbox.id}
-                  onChange={() => handleCheckbox(item.id)}
+                  name={item.Name}
+                  checked={item.status == 1 ? true:false}
+                  onChange={() => handleCheckbox(item.ID)}
                   className="w-11 h-11 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
                 />
               </td>

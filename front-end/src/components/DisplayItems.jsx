@@ -53,7 +53,7 @@ const DisplayItems = ({ cateId, arrData }) => {
               key={book?.ID}
               ID={book?.ID}
               Name={book?.Name}
-              status={book?.status}
+              status={book?.quantity}
               price={book?.price}
               image={book?.image}
             />

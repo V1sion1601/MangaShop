@@ -1,23 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 
 //Dummy data
-import { cartItems } from "../../utils/dummyData";
+import { cartItems,itemsDataReleased,updateproduct } from "../../utils/dummyData";
 import isEmpty from "validator/lib/isEmpty";
 import isInt from "validator/lib/isInt";
 import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
   const navigate = useNavigate();
+  const [id,setid] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [image, setImage] = useState("");
   const [errors, setErrors] = useState({});
+  const [productList, setProductList] = useState([]);
+  useEffect(() => {
+    const fetchProductList = async () => {
+      try {
+        const response = await itemsDataReleased();
+        console.log("Fetch products successfully: ", response);
+        setProductList(response);
+      } catch (error) {
+        console.log("Failed to fetch product list: ", error);
+      }
+    };
+    fetchProductList();
+  }, []);
   const handleEditProduct = (id) => {
-    let model = cartItems.find((item) => item.id === id);
-    setName(model.name);
+    let model = productList.find((item) => item.ID === id);
+    setid(id);
+    setName(model.Name);
     setPrice(model.price.toString());
-    setQuantity(model.quantity.toString());
+    setQuantity(0);
     //setImage(model.image);
   };
   const validateAll = () => {
@@ -36,9 +51,6 @@ const AddProduct = () => {
     } else if (!isInt(quantity)) {
       msg.quantity = "Số lượng của bạn không hợp lệ";
     }
-    if (isEmpty(image)) {
-      msg.image = "Mời bạn chọn lại hình ảnh";
-    }
     setErrors(msg);
     if (Object.keys(msg).length > 0) return false;
     return true;
@@ -48,8 +60,8 @@ const AddProduct = () => {
     e.preventDefault();
     const isValid = validateAll();
     if (isValid) {
+      updateproduct(id,name,price,quantity);
       alert("Thành công");
-      navigate("/admin/products");
     }
     return;
   };
@@ -72,7 +84,7 @@ const AddProduct = () => {
                   className="px-3 py-2  rounded-md w-full focus:outline-red-200"
                   placeholder="Nhập tên hàng hóa"
                   value={name}
-                  readOnly={!name && true}
+                  readOnly={true}
                   onChange={(e) => {
                     setName(e.target.value);
                   }}
@@ -88,7 +100,7 @@ const AddProduct = () => {
                   className="px-3 py-2  rounded-md w-full focus:outline-red-200"
                   placeholder="Nhập giá"
                   value={price}
-                  readOnly={!price && true}
+                  readOnly={false}
                   onChange={(e) => {
                     setPrice(e.target.value);
                   }}
@@ -104,27 +116,12 @@ const AddProduct = () => {
                   className="px-3 py-2  rounded-md w-full focus:outline-red-200"
                   placeholder="Nhấp số lượng"
                   value={quantity}
-                  readOnly={!quantity && true}
+                  readOnly={false}
                   onChange={(e) => {
                     setQuantity(e.target.value);
                   }}
                 />
                 <small className="block text-red-700">{errors.quantity}</small>
-              </div>
-              <label className="flex justify-start items-center font-bold text-lg">
-                Hình ảnh:
-              </label>
-              <div>
-                <input
-                  type="file"
-                  accept="image/*"
-                  value={image}
-                  // readOnly={!image && true}
-                  onChange={(e) => {
-                    setImage(e.target.value);
-                  }}
-                />
-                <small className="block text-red-700">{errors.image}</small>
               </div>
             </div>
             <div className="flex flex-col justify-center items-center mt-5">
@@ -136,38 +133,6 @@ const AddProduct = () => {
               />
             </div>
           </form>
-        </div>
-        <div className="border-t-2 border-gray-300 w-full h-full overflow-y-scroll">
-          <h1 className="font-bold uppercase text-2xl mb-5 pt-5 text-center  ">
-            Hàng hóa vừa thêm
-          </h1>
-          <table className="table-auto w-full">
-            <thead className="border-b-2   border-gray-300 font-bold ">
-              <td>ID</td>
-              <td>Hình ảnh</td>
-              <td>Tên</td>
-              <td>Giá</td>
-              <td>Số lượng</td>
-            </thead>
-            <tbody>
-              {cartItems.map((item, index) => (
-                <tr key={index} className="border-b-2   border-gray-300">
-                  <td
-                    onClick={() => handleEditProduct(item.id)}
-                    className="cursor-pointer text-blue-500 font-semibold"
-                  >
-                    {item.id}
-                  </td>
-                  <td>
-                    <img className="h-36 py-2" src={item.image} alt="demo" />
-                  </td>
-                  <td>{item.Name}</td>
-                  <td>{`${item.price} VNĐ`}</td>
-                  <td>{item.quantity}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </div>
       </div>
       <div className="flex flex-col justify-start items-center w-1/2 h-screen  overflow-y-scroll">
@@ -183,18 +148,18 @@ const AddProduct = () => {
             <td>Số lượng</td>
           </thead>
           <tbody>
-            {cartItems.map((item, index) => (
+            {productList.map((item, index) => (
               <tr key={index} className="border-b-2   border-gray-300">
                 <td
-                  onClick={() => handleEditProduct(item.id)}
+                  onClick={() => handleEditProduct(item.ID)}
                   className="cursor-pointer text-blue-500 font-semibold"
                 >
-                  {item.id}
+                  {item.ID}
                 </td>
                 <td>
-                  <img className="h-36 py-2" src={item.image} alt="demo" />
+                  <img className="h-36 py-2" src={`/assets/${item.image}`} alt="demo" />
                 </td>
-                <td>{item.name}</td>
+                <td>{item.Name}</td>
                 <td>{`${item.price} VNĐ`}</td>
                 <td>{item.quantity}</td>
               </tr>

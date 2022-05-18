@@ -29,4 +29,26 @@ order.getbyId = function(id, result){
 
     });
 }
+order.create = function(id,price,quantity,result){
+    db.query("INSERT INTO `order` (`ID`, `price`, `quantity`, `ID_customer`, `status`)" 
+    +"VALUES (NULL, ?, ?, ?, '0');",[price,quantity,id], function(err,order){
+        if(err){
+            result(null);
+            return;
+        }
+        else{
+            result({id:order.insertId});
+        }
+    });
+}
+order.update = function(id,status,result){
+    db.query("UPDATE `order` SET status = ? WHERE ID = ?",[status,id],function(err,order){
+        if(err){
+            result(null);
+            return;
+        }else{
+            result({id: id});
+        }
+    });
+}
 module.exports = order;

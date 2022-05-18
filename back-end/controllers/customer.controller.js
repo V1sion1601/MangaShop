@@ -1,4 +1,5 @@
 const res = require('express/lib/response');
+const { updateprofile } = require('../models/customer.model');
 const customer = require('../models/customer.model');
 
 const customercontroller = {
@@ -34,6 +35,36 @@ const customercontroller = {
            });
         //    res.status(200).send(req.params.id);
         }catch(err){
+            res.status(500).json(err);
+        }
+    },
+    //createcustomer
+    createcustomer: async (req,res)=>{
+        try{
+            customer.create(req.params.name,req.params.ID_account,req.params.address,req.params.phone,function(data){
+                res.status(200).json(data);
+            });
+        }catch(err){
+            res.status(500).json(err);
+        }
+    },
+    //createcustomerforgoogle
+    createcustomerforgoogle: async (req,res)=>{
+        try {
+            customer.createforgoogle(req.params.name,req.params.ID_account,function(data){
+                res.status(200).json(data);
+            });
+        } catch (error) {
+            res.status(500).json(data);
+        }
+    },
+    //updateprofile
+    updateprofile: async (req,res)=>{
+        try {
+            customer.updateprofile(req.params.id,req.params.name,req.params.address,req.params.phone,req.params.ID_account,function(data){
+                    res.status(200).json(data);
+            });
+        } catch (error) {
             res.status(500).json(err);
         }
     }

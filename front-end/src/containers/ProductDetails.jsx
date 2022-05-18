@@ -42,7 +42,21 @@ const ProductDetails = () => {
           cart.map((data) => {
             if (data.ID === productList[0].ID) {
               flag++;
-              data.quantity += parseInt(productQuantity);
+              if(productList[0].quantity<parseInt(data.quantity)+parseInt(productQuantity)){
+                toast.error("Bạn nhập quá mức số lượng sản phẩm hiện có", {
+                  position: "top-right",
+                  autoClose: 1000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: false,
+                  draggable: true,
+                  progress: undefined,
+                });
+              }else{
+             
+              data.quantity = parseInt(data.quantity) + parseInt(productQuantity);
+              }
+              
             }
           });
           if (flag === 0) {

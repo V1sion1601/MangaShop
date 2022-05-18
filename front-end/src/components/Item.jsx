@@ -21,10 +21,10 @@ const Item = ({ ID, Name, price, status, image }) => {
         Tình trạng:
         <span
           className={`${
-            status === 1 ? "text-indigo-500" : "text-red-500"
+            status > 0 ? "text-indigo-500" : "text-red-500"
           } font-bold`}
         >
-          {status === 1 ? " Còn hàng" : " Hết hàng"}
+          {status > 0 ? " Còn hàng" : " Hết hàng"}
         </span>
       </p>
       <Link

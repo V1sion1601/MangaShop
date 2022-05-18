@@ -8,5 +8,8 @@ router.post("/",salecontroller.addsale);
 router.get("/",salecontroller.getallsale);
 //getsalebyID
 router.get("/:id",salecontroller.getsalebyID);
-
+//create
+router.put("/:name/:percent/:require/:date_start/:date_finish",salecontroller.create);
+//update
+router.get("/update/:id/:name/:percent/:require/:date_start/:date_finish",salecontroller.update);
 module.exports = router;

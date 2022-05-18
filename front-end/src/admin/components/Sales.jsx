@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 //Dummy data
 
-import { sales } from "../../utils/dummyData";
+import { sales, getsale, getsalebyName, createsale, updatesale } from "../../utils/dummyData";
 import isEmpty from "validator/lib/isEmpty";
 import isInt from "validator/lib/isInt";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const Sales = () => {
   const [name, setName] = useState("");
   const [per, setPer] = useState("");
@@ -12,19 +13,35 @@ const Sales = () => {
   const [dateEnd, setDateEnd] = useState("");
   const [condition, setCondition] = useState("");
   const [errors, setErrors] = useState({});
+  const [id, setid] = useState("");
   const navigate = useNavigate();
   console.log(typeof per);
+  const [sale,setsale] = useState([]);
+  useEffect(() => {
+    const fetchsaleList = async () => {
+      try {
+        const response = await getsale();
+        console.log(response);
+        setsale(response);
+      } catch (error) {
+        console.log("Failed to fetch product list: ", error);
+      }
+    };
+    fetchsaleList();
+    // fetchsaleList();
+  }, []);
   const handleEditSale = (id) => {
-    let model = sales.find((item) => item.id === id);
-    setName(model.name);
-    setPer(model.percentage.toString());
+    let model = sale.find((item) => item.id === id);
+    setid(id);
+    setName(model.Name);
+    setPer(model.Percent.toString());
     setDateStart(
-      new Date(`${model.dateStart} 14:48 UTC`).toISOString().substr(0, 10)
+      new Date(`${model.date_start} 14:48 UTC`).toISOString().substr(0, 10)
     );
     setDateEnd(
-      new Date(`${model.dateEnd} 14:48 UTC`).toISOString().substr(0, 10)
+      new Date(`${model.date_finish} 14:48 UTC`).toISOString().substr(0, 10)
     );
-    setCondition(model.condition.toString());
+    setCondition(model.Require.toString());
   };
 
   const validateAll = () => {
@@ -53,14 +70,47 @@ const Sales = () => {
     if (Object.keys(msg).length > 0) return false;
     return true;
   };
-  const handleSubmit = (e) => {
+  const handleupdate = async (e) => {
     e.preventDefault();
     const isValid = validateAll();
-    if (isValid) {
-      alert("Thành công");
-      navigate("/admin/sales");
+    if (!isValid) return;
+    console.log(name);
+    const resgetsale = await getsalebyName(name);
+    console.log(resgetsale);
+    if(resgetsale!=6){
+      const resupdate = updatesale(id,name,per,condition,dateStart,dateEnd);
     }
-    return;
+    else{
+      toast.error("Tên khuyến mãi không tồn tại xin cập nhật lại!", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
+  const handleadd = async (e) =>{
+    e.preventDefault();
+    const isValid = validateAll();
+    if(!isValid)return;
+    const resgetsale = await getsalebyName(name);
+    if(resgetsale==6){
+      const resupdate = createsale(name,per,condition,dateStart,dateEnd);
+    }
+    else{
+      toast.error("Tên khuyến mãi đã tồn tại xin nhập tên khác!", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
   };
 
   return (
@@ -146,43 +196,17 @@ const Sales = () => {
                 type="submit"
                 class="cursor-pointer mt-5 px-7 py-3 mb-4 rounded-lg bg-red-200 uppercase tracking-wider font-semibold text-sm text-white shadow-lg hover:-translate-y-0.5 transform transition hover:bg-red-400 focus:ring focus:ring-offset-2 active:bg-red-400"
                 value="Cập nhật"
-                onClick={handleSubmit}
+                onClick={handleupdate}
+              />
+              <input
+                type="submit"
+                class="cursor-pointer mt-5 px-7 py-3 mb-4 rounded-lg bg-red-200 uppercase tracking-wider font-semibold text-sm text-white shadow-lg hover:-translate-y-0.5 transform transition hover:bg-red-400 focus:ring focus:ring-offset-2 active:bg-red-400"
+                value="Thêm Khuyến Mãi"
+                onClick={handleadd}
               />
             </div>
+            
           </form>
-        </div>
-        <div className="border-t-2 border-gray-300 w-full h-full overflow-y-scroll">
-          <h1 className="font-bold uppercase text-2xl mb-5 pt-5 text-center  ">
-            Khuyến mãi được thêm
-          </h1>
-          <table className="table-auto w-full">
-            <thead className="border-b-2   border-gray-300 font-bold ">
-              <td>ID</td>
-              <td>Tên</td>
-              <td>Phần trăm (%)</td>
-              <td>Ngày bắt đầu</td>
-              <td>Ngày kết thúc</td>
-              <td>Điều kiện</td>
-            </thead>
-            <tbody>
-              {sales.map((sale, index) => (
-                <tr key={index} className="border-b-2   border-gray-300">
-                  <td
-                    onClick={() => handleEditSale(sale.id)}
-                    className="text-blue-500 cursor-pointer"
-                  >
-                    {sale.id}
-                  </td>
-
-                  <td>{sale.name}</td>
-                  <td>{sale.percentage}%</td>
-                  <td>{sale.dateStart}</td>
-                  <td>{sale.dateEnd}</td>
-                  <td>{sale.condition}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </div>
       </div>
       <div className="flex flex-col justify-start items-center w-1/2 ">
@@ -199,7 +223,7 @@ const Sales = () => {
             <td>Điều kiện</td>
           </thead>
           <tbody>
-            {sales.map((sale, index) => (
+            {sale.map((sale, index) => (
               <tr key={index} className="border-b-2   border-gray-300">
                 <td
                   onClick={() => handleEditSale(sale.id)}
@@ -208,11 +232,11 @@ const Sales = () => {
                   {sale.id}
                 </td>
 
-                <td>{sale.name}</td>
-                <td>{sale.percentage}%</td>
-                <td>{sale.dateStart}</td>
-                <td>{sale.dateEnd}</td>
-                <td>{sale.condition}</td>
+                <td>{sale.Name}</td>
+                <td>{sale.Percent}%</td>
+                <td>{sale.date_start}</td>
+                <td>{sale.date_finish}</td>
+                <td>{sale.Require}</td>
               </tr>
             ))}
           </tbody>

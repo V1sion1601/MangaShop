@@ -16,19 +16,7 @@ const ItemCarousel = ({ header, arrData }) => {
               key={item?.ID}
               ID={item?.ID}
               Name={item?.Name}
-              status={item?.status}
-              price={item?.price}
-              image={item?.image}
-            />
-          ))}
-        </div>
-        <div className="grid grid-cols-4 mt-4 gap-4">
-          {arrData.slice(8, 12).map((item) => (
-            <Item
-              key={item?.ID}
-              ID={item?.ID}
-              Name={item?.Name}
-              status={item?.status}
+              status={item?.quantity}
               price={item?.price}
               image={item?.image}
             />

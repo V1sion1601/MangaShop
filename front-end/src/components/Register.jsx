@@ -4,6 +4,8 @@ import isEmpty from "validator/lib/isEmpty";
 import isEmail from "validator/lib/isEmail";
 import isMobilePhone from "validator/lib/isMobilePhone";
 import { useNavigate } from "react-router-dom";
+import { createaccount, createcustomer, accountbyusername2} from "../utils/dummyData";
+import { toast } from "react-toastify";
 const Image = "assets/Wallpaper.jpg";
 
 const Register = () => {
@@ -14,7 +16,7 @@ const Register = () => {
   const [checked, setChecked] = useState();
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-
+  const [name, setname] = useState("");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   //Validation
@@ -45,7 +47,10 @@ const Register = () => {
       msg.phone = "Số điện thoại của bạn không hợp lệ";
     }
     if (isEmpty(address)) {
-      msg.address = "Mời bạn nhập email của bạn";
+      msg.address = "Mời bạn nhập địa chỉ của bạn";
+    }
+    if(isEmpty(name)){
+      msg.name = "Mời bạn nhập lại họ và tên của bạn";
     }
 
     setErrors(msg);
@@ -53,11 +58,38 @@ const Register = () => {
     return true;
   };
   //Submit progress
-  const submitRegister = (e) => {
+  const submitRegister = async(e) => {
     e.preventDefault();
     const isValid = validateAll();
     if (!isValid) return;
-    navigate("/login");
+    const resaccount = await accountbyusername2(email);
+    if(resaccount === 1){
+      toast.error("Email đã tồn tại xin hãy đăng ký bằng Email khác", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
+    } else{
+      const rescreateaccount = await createaccount(email,password);
+      const rescreatecustomer = await createcustomer(name,rescreateaccount?.id,address,phone);
+      sessionStorage.setItem("user", JSON.stringify(rescreatecustomer));
+      toast.success("Đăng ký thành công!", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      navigate("/", { replace: true });
+    }
+    
+    // navigate("/login");
   };
 
   //Layout
@@ -115,6 +147,22 @@ const Register = () => {
                 }}
               />
               <small className="block text-red-700 ">{errors.cpassword}</small>
+            </label>
+            <label className="block ">
+              <span class="block text-md font-medium text-slate-700">
+                Họ và Tên
+                <span className="text-red-600">*</span>
+              </span>
+              <input
+                type="text"
+                className="inline-block focus:ring-1 pl-3 py-2 mt-2 mb-2 bg-white  w-96 gap-2 rounded-lg outline-none"
+                placeholder="Nhập họ và tên"
+                value={name}
+                onChange={(e) => {
+                  setname(e.target.value);
+                }}
+              />
+              <small className="block text-red-700 ">{errors.name}</small>
             </label>
             <label className="block ">
               <span class="block text-md font-medium text-slate-700">

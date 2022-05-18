@@ -19,6 +19,7 @@ import ProductDetails from "./ProductDetails";
 import ProductList from "./ProductList";
 import Footer from "../components/Footer";
 import Search from "../components/Search";
+import OrderDetail from "../components/OrderDetail";
 
 const Home = () => {
   const user = JSON.parse(sessionStorage.getItem("user"));
@@ -130,6 +131,7 @@ const Home = () => {
               <Route path="/profile/:userId" element={<Profile />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/details/:productId" element={<ProductDetails />} />
+              <Route path="/order/detail/:id" element={<OrderDetail />} />
             </Routes>
           </div>
         </div>

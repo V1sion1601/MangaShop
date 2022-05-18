@@ -8,5 +8,8 @@ router.post("/",ordercontroller.addorder);
 router.get("/",ordercontroller.getallorder);
 //getorderbyID
 router.get("/:id",ordercontroller.getorderbyID);
-
+//create
+router.put("/:id/:price/:quantity",ordercontroller.createorder);
+//updateorder
+router.post("/:id/:status",ordercontroller.updateorder);
 module.exports = router;

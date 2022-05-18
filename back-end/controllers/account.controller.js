@@ -40,6 +40,20 @@ const accountcontroller = {
         }
     },
 
+    
+    //getaccountbyName
+    getaccountbyusername: async (req,res)=>{
+        try{
+          account.getbyusername(req.params.username,function(data){
+              if(!Object.keys(data).length) res.status(200).json(NULL);
+                else res.status(200).json(data);
+           });
+        //    res.status(200).send(req.params.id);
+        }catch(err){
+            res.status(500).json(err);
+        }
+    },
+
     // getaccountbyIDgoogle
     getaccountbyIDgoogle: async (req,res)=>{
         try{
@@ -51,7 +65,49 @@ const accountcontroller = {
         }catch(err){
             res.status(500).json(err);
         }
+    },
+    
+    //createaccount
+    createaccount: async (req,res)=>{
+        try{
+            account.create(req.params.username,req.params.password,function(data){
+                res.status(200).json(data);
+            });
+        }
+        catch{
+            res.status(500).json(err);
+        }
+    },
+    //createaccountforgoogle
+    createaccountforgoogle: async (req,res)=>{
+        try{
+            account.createforgoogle(req.params.username,req.params.password,req.params.ID_google,function(data){
+                res.status(200).json(data);
+            });
+        }
+        catch{
+            res.status(500).json(err);
+        }
+    },
+    //updatepassword
+    updatepassword: async (req,res)=>{
+        try {
+            account.updatepassword(req.params.id,req.params.password,function(data){
+                res.status(200).json(data);
+            });
+        } catch (error) {
+            res.status(500).json(err);
+        }
+    },
+    //updatesatus
+    updatestatus2: async (req,res)=>{
+        try {
+            account.updatestatus(req.params.id,req.params.status,function(data){
+                res.status(200).json(data);
+            });
+        } catch (error) {
+            res.status(500).json(err);
+        }
     }
-
 }
 module.exports = accountcontroller;

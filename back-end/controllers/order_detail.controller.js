@@ -23,6 +23,16 @@ const order_detailcontroller = {
         }catch(err){
             res.status(500).json(err);
         }
+    },
+    //create order_detail
+    createorder_detail: async (req,res)=>{
+        try {
+            order_detail.create(req.params.id,req.params.id_product,req.params.quantity,function(data){
+                res.status(200).json(data);
+            })
+        } catch (error) {
+                res.status(500).json(err);
+        }
     }
 }
 module.exports = order_detailcontroller;

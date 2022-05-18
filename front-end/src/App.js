@@ -6,6 +6,7 @@ import Admin from "./admin/containers/Admin";
 import Home from "./containers/Home";
 
 import axios from "axios";
+import OrderDetail from "./components/OrderDetail";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
       <Route path="/admin" element={<Admin />} />
       <Route path="/admin/:fea" element={<Admin />} />
       <Route path="/admin/detail/:id" element={<Admin />} />
+     
     </Routes>
   );
 };

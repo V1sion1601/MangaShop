@@ -1,44 +1,57 @@
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 //Dummy data
-import { checkCategories } from "../../utils/dummyData";
+import { checkCategories,getallcategory, deletecategory, addcategory } from "../../utils/dummyData";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import isEmpty from "validator/lib/isEmpty";
 
 const Categories = () => {
-  const [checkbox, setCheckbox] = useState(
-    checkCategories.map((item) => {
-      return {
-        id: item.id,
-        status: false,
-      };
-    })
-  );
+  
   const [toggleForm, setToggleForm] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState({});
   const showForm = `absolute px-12 flex flex-col  justify-center items-center top-0 bottom-0 left-0 right-0 bg-blackOverlay`;
+  const [category,setcategory] = useState([]);
+  const [checkbox, setCheckbox] = useState([]);
+  useEffect(() => {
+    const fetchcategoryList = async () => {
+      try {
+        const response = await getallcategory();
+        console.log(response)
+        setcategory(response);
+        setCheckbox(response);
+      } catch (error) {
+        console.log("Failed to fetch product list: ", error);
+      }
+    };
+    fetchcategoryList();
+    // fetchsaleList();
+  }, []);
   const handleCheckbox = (id) => {
-    const arrChecked = checkbox.map((item) => {
+    console.log(id);
+    console.log(checkbox);
+    const arrChecked = category.map((item) => {
       return {
-        id: item.id,
-        status: id === item.id ? !item.status : item.status,
+        ID: item.ID,
+        Name: item.Name,
+        status: id === item.ID ? !item.status : item.status,
       };
     });
 
-    setCheckbox(arrChecked);
+    setcategory(arrChecked);
   };
-  const handleDeleteBtn = () => {
-    let checked = checkbox.filter((item) => item.status === true);
+  const handleDeleteBtn =  () => {
+    let checked = category.filter((item) => item.status === true);
     if (checked.length > 0) {
       let confirm =
         window.confirm(`Bạn có chắc xóa những thể loại có ${checked.map(
           (item) => {
-            return `id: ${item.id} `;
+            return `id: ${item.ID} `;
+            
           }
         )} không?
       `);
-      confirm && alert("Xóa thành công");
+      confirm && checked.map((item)=>{  deletecategory(item.ID)}) && alert("Xóa thành công") ;
     } else {
       alert("Không có gì để xóa");
     }
@@ -49,23 +62,24 @@ const Categories = () => {
     if (isEmpty(name)) {
       msg.name = "Mời bạn nhập lại tên";
     }
-    if (isEmpty(description)) {
-      msg.description = "Mời bạn nhập lại mô tả";
-    }
+    
     setErrors(msg);
     if (Object.keys(msg).length > 0) return false;
     return true;
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const isValid = validateAll();
+    const resaddcategory = addcategory(name);
+    console.log(resaddcategory);
     if (isValid) {
       alert("Thành công");
       setToggleForm(false);
     }
+
     return;
   };
-
+  
   return (
     <div className="relative flex flex-col justify-start items-center h-screen overflow-y-scroll">
       <div className={toggleForm === true ? showForm : `${showForm} hidden `}>
@@ -97,21 +111,6 @@ const Categories = () => {
                   />
                   <small className="text-left block text-red-300  font-bold">
                     {errors.name}
-                  </small>
-                </div>
-                <label className="flex justify-start items-center font-bold text-lg">
-                  Mô tả:
-                </label>
-                <div>
-                  <input
-                    type="text"
-                    className="px-3 py-2  rounded-md w-full focus:outline-black-200 text-black"
-                    placeholder="Nhập mô tả"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  />
-                  <small className="text-left block text-red-300  font-bold">
-                    {errors.description}
                   </small>
                 </div>
               </div>
@@ -148,21 +147,19 @@ const Categories = () => {
         <thead className="border-b-2   border-gray-300 font-bold ">
           <td>ID</td>
           <td>Tên</td>
-          <td>Mô tả</td>
           <td>Xóa</td>
         </thead>
         <tbody>
-          {checkCategories.map((item, index) => (
+          {category.map((item, index) => (
             <tr key={index} className="border-b-2   border-gray-300">
-              <td>{item.id}</td>
-              <td>{item.name}</td>
-              <td>{item.description}</td>
+              <td>{item.ID}</td>
+              <td>{item.Name}</td>
               <td className="py-3">
                 <input
                   type="checkbox"
-                  name={item.name}
-                  checked={checkbox.id}
-                  onChange={() => handleCheckbox(item.id)}
+                  name={item.Name}
+                  checked={item.status}
+                  onChange={() => handleCheckbox(item.ID)}
                   className="w-11 h-11 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
                 />
               </td>

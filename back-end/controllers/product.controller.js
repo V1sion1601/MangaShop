@@ -36,6 +36,46 @@ const productcontroller = {
         }catch(err){
             res.status(500).json(err);
         }
+    },
+    //updatecart
+    updatecart: async (req,res)=>{
+        try {
+            product.updatecart(req.params.id,req.params.quantity,function(data){
+                res.status(200).json(data);
+            });
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+    //createproduct
+    createproduct: async (req,res)=>{
+        try {
+            product.create(req.params.name,req.params.price,req.params.quantity,req.params.image,function(data){
+                res.status(200).json(data);
+            });
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+    //delete
+    deleteproduct: async (req,res)=>{
+        try {
+            product.delete(req.params.id,function(data){
+                res.status(200).json(data);
+            })
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+    updateproduct: async (req,res)=>{
+        try{
+            product.updateproduct(req.params.id,req.params.name,req.params.price,req.params.quantity,function(data){
+                    res.status(200).json(data);
+            });
+        }catch(error){
+            res.status(500).json(error);
+        }
     }
 }
+
 module.exports = productcontroller;

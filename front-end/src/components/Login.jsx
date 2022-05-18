@@ -9,7 +9,7 @@ import isEmail from "validator/lib/isEmail";
 import { useNavigate } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 import { toast } from "react-toastify";
-import {accountbyusername, customerbyID, accountbygoogle} from "../utils/dummyData";
+import {accountbyusername, customerbyID, accountbygoogle, createaccountforgoogle,createcustomerforgoogle} from "../utils/dummyData";
 import { NULL } from "mysql/lib/protocol/constants/types";
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -40,6 +40,7 @@ const Login = () => {
     const res = await accountbyusername(email,password);
     console.log(res[0]?.role);
     if(res != 6){
+        if(res[0]?.status==1){
         if(res[0]?.role!=1){
         const res2 = await customerbyID(res[0]?.ID);
         console.log(res2);
@@ -67,7 +68,18 @@ const Login = () => {
       });
       navigate("/admin", { replace: true });
       }
+    } else{
+      toast.error("Tài khoản đã bị khóa!", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
+  }
     else {
       toast.error("Đăng nhập không thành công", {
         position: "top-right",
@@ -87,6 +99,7 @@ const Login = () => {
     const res = await accountbygoogle((response.profileObj).googleId);
     console.log((response.profileObj).googleId);
     if(res != 6){
+      if(res[0]?.status==1){
       if(res[0]?.role!=1){
       const res2 = await customerbyID(res[0]?.ID);
       console.log(res2);
@@ -101,24 +114,23 @@ const Login = () => {
       progress: undefined,
     });
     navigate("/", { replace: true });
-    }}
-    else if (res[0]?.role==1){
-      const res2 = await customerbyID(res[0]?.ID);
-      console.log(res2);
-      sessionStorage.setItem("user", JSON.stringify(res2[0]));
-      toast.success("Đăng nhập thành công!", {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-    navigate("/admin", { replace: true });
-    }
+      console.log(response.profileObj.email);
+    }} else{
+      toast.error("Tài khoản đã bị khóa!", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+  }}
     else {
-      toast.error("Đăng nhập không thành công", {
+      const rescreateaccount = await createaccountforgoogle(response.profileObj.email,"123456",response.profileObj.googleId);
+      const rescreatecustomer = await createcustomerforgoogle(response.profileObj.name,rescreateaccount?.id);
+      toast.success("Đăng ký tài khoản thành công, Xin hãy vào trang cá nhân" 
+      + " và nhập đầy đủ địa chỉ và số điện thoại để có thể tiến hành đặt hàng", {
         position: "top-right",
         autoClose: 1000,
         hideProgressBar: false,
@@ -127,7 +139,8 @@ const Login = () => {
         draggable: true,
         progress: undefined,
       });
-      navigate("/login");
+      sessionStorage.setItem("user", JSON.stringify(rescreatecustomer));
+      navigate("/profile/"+rescreatecustomer?.ID,{ replace:true});
     }
   };
   //Google response when fail

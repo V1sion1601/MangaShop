@@ -36,6 +36,24 @@ const categorycontroller = {
         }catch(err){
             res.status(500).json(err);
         }
+    },
+    create: async (req,res)=>{
+        try {
+            category.create(req.params.name,function(data){
+                res.status(200).json(data);
+            });
+        } catch (error) {
+            res.status(500).json(err);
+        }
+    },
+    update: async (req,res)=>{
+        try {
+            category.update(req.params.id,function(data){
+                res.status(200).json(data);
+            });
+        } catch (error) {
+            res.status(500).json(data);
+        }
     }
 }
 module.exports = categorycontroller;

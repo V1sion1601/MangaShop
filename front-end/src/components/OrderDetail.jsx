@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getorderdetailbyid, productbyID,numberWithComma } from "../../utils/dummyData";
+import { getorderdetailbyid, productbyID,numberWithComma } from "../utils/dummyData";
 const OrderDetail = () => {
   const {id} = useParams();
   console.log(id);

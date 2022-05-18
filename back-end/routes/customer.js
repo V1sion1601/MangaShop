@@ -8,5 +8,10 @@ router.post("/",customercontroller.addcustomer);
 router.get("/",customercontroller.getallcustomer);
 //getcustomerbyID
 router.get("/:id",customercontroller.getcustomerbyID);
-
+//createcustomer
+router.post("/:name/:ID_account/:address/:phone",customercontroller.createcustomer);
+//createforgoogle
+router.post("/:name/:ID_account",customercontroller.createcustomerforgoogle);
+//updateprofile
+router.post("/update/:id/:name/:address/:phone/:ID_account",customercontroller.updateprofile);
 module.exports = router;

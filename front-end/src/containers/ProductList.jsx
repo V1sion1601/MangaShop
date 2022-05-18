@@ -55,7 +55,6 @@ const ProductList = () => {
       </Carousel>
       <div>
         <ItemCarousel arrData={productList} header={"Vừa xuất bản"} />
-        <ItemCarousel arrData={productList} header={"Đang thịnh hành"} />
       </div>
     </div>
   );
