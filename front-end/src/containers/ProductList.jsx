@@ -11,27 +11,24 @@ import { itemsDataReleased, itemsDataTrending } from "../utils/dummyData";
 const Banner = "../assets/Banner.jpg";
 const Banner2 = "../assets/Banner2.jpg";
 
-
-
 const ProductList = () => {
   const [productList, setProductList] = useState([]);
   useEffect(() => {
-  const fetchProductList = async () => {
-  try {
-  const params = { _page: 1, _limit: 4 };
-  const response = await itemsDataReleased(params);
-  console.log('Fetch products successfully: ', response);
-  setProductList(response);
-  console.log(productList);
-  } catch (error) {
-  console.log('Failed to fetch product list: ', error);
-  }
-  }
-  fetchProductList();
+    const fetchProductList = async () => {
+      try {
+        const params = { _page: 1, _limit: 4 };
+        const response = await itemsDataReleased(params);
+        console.log("Fetch products successfully: ", response);
+        setProductList(response);
+        console.log(productList);
+      } catch (error) {
+        console.log("Failed to fetch product list: ", error);
+      }
+    };
+    fetchProductList();
   }, []);
   return (
     <div className="h-full space-y-4 animate-slide-in ">
-      {/* Setup for Banner (Advertisement) */}
       <Carousel autoPlay={true} interval={600}>
         <div class="w-full h-64 relative ">
           <div

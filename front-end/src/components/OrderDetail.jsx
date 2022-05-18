@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getorderdetailbyid, productbyID,numberWithComma } from "../utils/dummyData";
+import {
+  getorderdetailbyid,
+  productbyID,
+  numberWithComma,
+} from "../utils/dummyData";
 const OrderDetail = () => {
-  const {id} = useParams();
+  const { id } = useParams();
   console.log(id);
-  const [orderdetail,setorderdetail] = useState([]);
-  const [product,setproduct] = useState([]);
+  const [orderdetail, setorderdetail] = useState([]);
+  const [product, setproduct] = useState([]);
   useEffect(() => {
     const fetchorderList = async () => {
       try {
@@ -20,7 +24,7 @@ const OrderDetail = () => {
   }, []);
 
   return (
-    <div>
+    <div className="h-screen">
       <h1 className="text-center font-bold py-5 text-lg uppercase">{`Chi tiết đơn hàng của mã đơn hàng: ${id}`}</h1>
       <table className="table-auto w-full pt-4">
         <thead className="border-b-2 border-gray-300 font-bold">
@@ -31,26 +35,28 @@ const OrderDetail = () => {
             <td>Giá tiền</td>
           </tr>
         </thead>
-     
-      <tbody>
-      {orderdetail.map((data)=>(
-                <>
-                <tr
-                      className="text-left border-b border-indigo-200 "
-                      key={data.ID}
-                    >
+
+        <tbody>
+          {orderdetail.map((data) => (
+            <>
+              <tr
+                className="text-left border-b border-indigo-200 "
+                key={data.ID}
+              >
                 <td>{data?.Name}</td>
-                <td><img
-            className="w-40 h-45"
-            src={`/assets/${data?.image}`}
-            alt={`img-${data?.ID}`}
-          /></td>
+                <td className="py-5">
+                  <img
+                    className="w-40 h-45"
+                    src={`/assets/${data?.image}`}
+                    alt={`img-${data?.ID}`}
+                  />
+                </td>
                 <td>{data?.quantity}</td>
-                <td>{numberWithComma(data?.price)}</td>
-                </tr>
-                </>
-              ))}
-      </tbody>
+                <td>{`${numberWithComma(data?.price)} VNĐ`}</td>
+              </tr>
+            </>
+          ))}
+        </tbody>
       </table>
     </div>
   );

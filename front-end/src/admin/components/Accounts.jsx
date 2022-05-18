@@ -1,13 +1,17 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import { accounts,getallaccount,updatestatusaccount } from "../../utils/dummyData";
+import {
+  accounts,
+  getallaccount,
+  updatestatusaccount,
+} from "../../utils/dummyData";
 const Accounts = () => {
   const [toggleForm, setToggleForm] = useState(false);
   const [name, setName] = useState("");
   const [status, setStatus] = useState();
   const [id, setid] = useState("");
-  const showForm = `absolute px-12 flex flex-col z-10 justify-center items-center top-0 bottom-0 left-0 right-0 bg-blackOverlay`;
-  const [account,setaccount] = useState([]);
+  const showForm = `absolute px-12 pt-5 flex flex-col z-10 justify-start items-center inset-0 bg-blackOverlay`;
+  const [account, setaccount] = useState([]);
   useEffect(() => {
     const fetchaccountList = async () => {
       try {
@@ -30,21 +34,20 @@ const Accounts = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const status2 = document.getElementById("status").value;
-    if(id!=2){
-    const resupdate = updatestatusaccount(id,status2);
-    console.log(resupdate);
-    alert("Thành công");
-    }
-    else{
+    if (id != 2) {
+      const resupdate = updatestatusaccount(id, status2);
+      console.log(resupdate);
+      alert("Thành công");
+    } else {
       alert("không thể khóa tài khoản admin");
     }
     setToggleForm(false);
   };
 
   return (
-    <div className="relative flex flex-col justify-start items-center h-screen overflow-y-scroll">
+    <div className="relative flex flex-col justify-start items-center h-fit">
       <div className={toggleForm === true ? showForm : `${showForm} hidden `}>
-        <div className="bg-gray-500  flex flex-col w-full rounded mx-5">
+        <div className="bg-gray-500  flex flex-col w-full rounded mx-5 h-auto">
           <div className="text-white flex pr-5 flex-row items-center w-full justify-end">
             <AiOutlineCloseCircle
               fontSize={40}

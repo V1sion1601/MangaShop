@@ -1,23 +1,27 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 //Dummy data
-import { checkCategories,getallcategory, deletecategory, addcategory } from "../../utils/dummyData";
+import {
+  checkCategories,
+  getallcategory,
+  deletecategory,
+  addcategory,
+} from "../../utils/dummyData";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import isEmpty from "validator/lib/isEmpty";
 
 const Categories = () => {
-  
   const [toggleForm, setToggleForm] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState({});
   const showForm = `absolute px-12 flex flex-col  justify-center items-center top-0 bottom-0 left-0 right-0 bg-blackOverlay`;
-  const [category,setcategory] = useState([]);
+  const [category, setcategory] = useState([]);
   const [checkbox, setCheckbox] = useState([]);
   useEffect(() => {
     const fetchcategoryList = async () => {
       try {
         const response = await getallcategory();
-        console.log(response)
+        console.log(response);
         setcategory(response);
         setCheckbox(response);
       } catch (error) {
@@ -40,18 +44,21 @@ const Categories = () => {
 
     setcategory(arrChecked);
   };
-  const handleDeleteBtn =  () => {
+  const handleDeleteBtn = () => {
     let checked = category.filter((item) => item.status === true);
     if (checked.length > 0) {
       let confirm =
         window.confirm(`Bạn có chắc xóa những thể loại có ${checked.map(
           (item) => {
             return `id: ${item.ID} `;
-            
           }
         )} không?
       `);
-      confirm && checked.map((item)=>{  deletecategory(item.ID)}) && alert("Xóa thành công") ;
+      confirm &&
+        checked.map((item) => {
+          deletecategory(item.ID);
+        }) &&
+        alert("Xóa thành công");
     } else {
       alert("Không có gì để xóa");
     }
@@ -62,12 +69,12 @@ const Categories = () => {
     if (isEmpty(name)) {
       msg.name = "Mời bạn nhập lại tên";
     }
-    
+
     setErrors(msg);
     if (Object.keys(msg).length > 0) return false;
     return true;
   };
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const isValid = validateAll();
     const resaddcategory = addcategory(name);
@@ -75,11 +82,12 @@ const Categories = () => {
     if (isValid) {
       alert("Thành công");
       setToggleForm(false);
+      window.location.reload();
     }
 
     return;
   };
-  
+
   return (
     <div className="relative flex flex-col justify-start items-center h-screen overflow-y-scroll">
       <div className={toggleForm === true ? showForm : `${showForm} hidden `}>
@@ -105,7 +113,7 @@ const Categories = () => {
                   <input
                     type="text"
                     className="px-3 py-2  rounded-md w-full focus:outline-black-200 text-black"
-                    placeholder="Nhập tên hàng hóa"
+                    placeholder="Nhập tên danh mục"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                   />

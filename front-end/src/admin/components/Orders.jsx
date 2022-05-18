@@ -1,11 +1,16 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
 //Dummy data
-import { orderItems,getallorder, updateorder } from "../../utils/dummyData";
+import {
+  orderItems,
+  getallorder,
+  updateorder,
+  numberWithComma,
+} from "../../utils/dummyData";
 
 const Orders = () => {
-  const showForm = `absolute px-12 flex flex-col z-10 justify-center items-center top-0 bottom-0 left-0 right-0 bg-blackOverlay`;
+  const showForm = `absolute px-12 pt-6 flex flex-col z-10 justify-start items-center inset-0 bg-blackOverlay`;
   const [toggleForm, setToggleForm] = useState(false);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -16,14 +21,15 @@ const Orders = () => {
   const handleConfirm = (ID) => {
     navigate(`/admin/detail/${ID}`);
   };
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await updateorder(ID,status);
-    order.find((item) => item.ID === ID).status=status;
+    const res = await updateorder(ID, status);
+    order.find((item) => item.ID === ID).status = status;
     console.log(order);
     setToggleForm(false);
+    window.location.reload();
   };
-  const [order,setorder] = useState([]);
+  const [order, setorder] = useState([]);
   useEffect(() => {
     const fetchorderList = async () => {
       try {
@@ -37,8 +43,7 @@ const Orders = () => {
     fetchorderList();
   }, []);
   const handleDetail = (ID) => {
-    const detail = order.find((item) => item.ID
-     === ID);
+    const detail = order.find((item) => item.ID === ID);
     setID(ID);
     setToggleForm(true);
     setName(detail.ID_customer);
@@ -47,10 +52,9 @@ const Orders = () => {
     setStatus(detail.status);
   };
   return (
-    
-    <div className="relative flex flex-col justify-start items-center h-screen overflow-y-scroll">
+    <div className="relative flex flex-col justify-start items-center h-fit ">
       <div className={toggleForm === true ? showForm : `${showForm} hidden `}>
-        <div className="bg-gray-500  flex flex-col w-full rounded mx-5">
+        <div className="bg-gray-500  flex flex-col w-full   rounded mx-5">
           <div className="text-white flex pr-5 flex-row items-center w-full justify-end">
             <AiOutlineCloseCircle
               fontSize={40}
@@ -64,7 +68,6 @@ const Orders = () => {
               Bảng Chi tiết đơn hàng {ID}
             </h1>
             <form>
-           
               <div className="grid grid-cols-2 gap-5">
                 <label className="flex justify-start items-center font-bold text-lg">
                   Tên:
@@ -116,9 +119,7 @@ const Orders = () => {
                     onChange={(e) => setStatus(e.target.value)}
                   >
                     <option value="2">Giao hàng thành công</option>
-                    <option value="1">
-                      Đã giao hàng
-                    </option>
+                    <option value="1">Đã giao hàng</option>
                     <option value="0">Chưa Xử lý</option>
                   </select>
                 </div>
@@ -152,14 +153,22 @@ const Orders = () => {
             <tr key={index} className="border-b-2   border-gray-300">
               <td>{item.ID}</td>
               <td>{item.ID_customer}</td>
-              <td>{`${item.price} VNĐ`}</td>
+              <td>{`${numberWithComma(item.price)} VNĐ`}</td>
               <td>{item.quantity}</td>
               <td
                 className={`${
-                  item.status === "delivery" ? "text-blue-500" : "text-red-500"
+                  item?.status === 0
+                    ? "text-red-500"
+                    : item?.status === 1
+                    ? "text-blue-500"
+                    : "text-green-500"
                 } font-bold capitalize`}
               >
-                {item?.status === 0 ? "chưa xử lý": item?.status === 1 ? "đã giao hàng":"giao hàng thành công"}
+                {item?.status === 0
+                  ? "chưa xử lý"
+                  : item?.status === 1
+                  ? "đã giao hàng"
+                  : "giao hàng thành công"}
               </td>
               <td className="p-7">
                 <button

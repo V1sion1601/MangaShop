@@ -1,7 +1,13 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 //Dummy data
 
-import { sales, getsale, getsalebyName, createsale, updatesale } from "../../utils/dummyData";
+import {
+  getsale,
+  getsalebyName,
+  createsale,
+  updatesale,
+  numberWithComma,
+} from "../../utils/dummyData";
 import isEmpty from "validator/lib/isEmpty";
 import isInt from "validator/lib/isInt";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +22,7 @@ const Sales = () => {
   const [id, setid] = useState("");
   const navigate = useNavigate();
   console.log(typeof per);
-  const [sale,setsale] = useState([]);
+  const [sale, setsale] = useState([]);
   useEffect(() => {
     const fetchsaleList = async () => {
       try {
@@ -77,10 +83,16 @@ const Sales = () => {
     console.log(name);
     const resgetsale = await getsalebyName(name);
     console.log(resgetsale);
-    if(resgetsale!=6){
-      const resupdate = updatesale(id,name,per,condition,dateStart,dateEnd);
-    }
-    else{
+    if (resgetsale != 6) {
+      const resupdate = updatesale(
+        id,
+        name,
+        per,
+        condition,
+        dateStart,
+        dateEnd
+      );
+    } else {
       toast.error("Tên khuyến mãi không tồn tại xin cập nhật lại!", {
         position: "top-right",
         autoClose: 1000,
@@ -92,15 +104,14 @@ const Sales = () => {
       });
     }
   };
-  const handleadd = async (e) =>{
+  const handleadd = async (e) => {
     e.preventDefault();
     const isValid = validateAll();
-    if(!isValid)return;
+    if (!isValid) return;
     const resgetsale = await getsalebyName(name);
-    if(resgetsale==6){
-      const resupdate = createsale(name,per,condition,dateStart,dateEnd);
-    }
-    else{
+    if (resgetsale == 6) {
+      const resupdate = createsale(name, per, condition, dateStart, dateEnd);
+    } else {
       toast.error("Tên khuyến mãi đã tồn tại xin nhập tên khác!", {
         position: "top-right",
         autoClose: 1000,
@@ -191,7 +202,7 @@ const Sales = () => {
                 <small className="block text-red-700">{errors.condition}</small>
               </div>
             </div>
-            <div className="flex flex-col justify-center items-center mt-5">
+            <div className="flex flex-row gap-6 justify-center items-center mt-5">
               <input
                 type="submit"
                 class="cursor-pointer mt-5 px-7 py-3 mb-4 rounded-lg bg-red-200 uppercase tracking-wider font-semibold text-sm text-white shadow-lg hover:-translate-y-0.5 transform transition hover:bg-red-400 focus:ring focus:ring-offset-2 active:bg-red-400"
@@ -205,7 +216,6 @@ const Sales = () => {
                 onClick={handleadd}
               />
             </div>
-            
           </form>
         </div>
       </div>
@@ -213,7 +223,7 @@ const Sales = () => {
         <header className="font-bold uppercase text-2xl mb-5 pt-5">
           Khuyến mãi hiện có
         </header>
-        <table className="table-auto w-full">
+        <table className="table-auto w-full ">
           <thead className="border-b-2   border-gray-300 font-bold ">
             <td>ID</td>
             <td>Tên</td>
@@ -227,16 +237,16 @@ const Sales = () => {
               <tr key={index} className="border-b-2   border-gray-300">
                 <td
                   onClick={() => handleEditSale(sale.id)}
-                  className="text-blue-500 cursor-pointer"
+                  className="text-blue-500 cursor-pointer pr-6 py-2"
                 >
                   {sale.id}
                 </td>
 
-                <td>{sale.Name}</td>
+                <td className="pr-4">{sale.Name}</td>
                 <td>{sale.Percent}%</td>
                 <td>{sale.date_start}</td>
                 <td>{sale.date_finish}</td>
-                <td>{sale.Require}</td>
+                <td>{`${numberWithComma(sale.Require)} VNĐ`}</td>
               </tr>
             ))}
           </tbody>

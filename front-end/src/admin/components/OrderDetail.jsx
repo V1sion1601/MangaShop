@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getorderdetailbyid, productbyID,numberWithComma } from "../../utils/dummyData";
+import {
+  getorderdetailbyid,
+  productbyID,
+  numberWithComma,
+} from "../../utils/dummyData";
 const OrderDetail = () => {
-  const {id} = useParams();
+  const { id } = useParams();
   console.log(id);
-  const [orderdetail,setorderdetail] = useState([]);
-  const [product,setproduct] = useState([]);
+  const [orderdetail, setorderdetail] = useState([]);
+  const [product, setproduct] = useState([]);
   useEffect(() => {
     const fetchorderList = async () => {
       try {
@@ -31,26 +35,28 @@ const OrderDetail = () => {
             <td>Giá tiền</td>
           </tr>
         </thead>
-     
-      <tbody>
-      {orderdetail.map((data)=>(
-                <>
-                <tr
-                      className="text-left border-b border-indigo-200 "
-                      key={data.ID}
-                    >
+
+        <tbody>
+          {orderdetail.map((data) => (
+            <>
+              <tr
+                className="text-left border-b border-indigo-200 "
+                key={data.ID}
+              >
                 <td>{data?.Name}</td>
-                <td><img
-            className="w-40 h-45"
-            src={`/assets/${data?.image}`}
-            alt={`img-${data?.ID}`}
-          /></td>
+                <td className="py-5">
+                  <img
+                    className="w-40 h-45"
+                    src={`/assets/${data?.image}`}
+                    alt={`img-${data?.ID}`}
+                  />
+                </td>
                 <td>{data?.quantity}</td>
-                <td>{numberWithComma(data?.price)}</td>
-                </tr>
-                </>
-              ))}
-      </tbody>
+                <td>{`${numberWithComma(data?.price)} VNĐ`}</td>
+              </tr>
+            </>
+          ))}
+        </tbody>
       </table>
     </div>
   );

@@ -1,9 +1,14 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 //Dummy data
 import { getsale } from "../utils/dummyData";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { numberWithComma,createorder,createorder_detail,updatecart } from "../utils/dummyData";
+import {
+  numberWithComma,
+  createorder,
+  createorder_detail,
+  updatecart,
+} from "../utils/dummyData";
 import Error from "./Error";
 import { BiTrashAlt } from "react-icons/bi";
 const Cart = () => {
@@ -11,7 +16,7 @@ const Cart = () => {
   const user = JSON.parse(sessionStorage.getItem("user"));
   const [quantityProduct, setQuantityProduct] = useState([]);
   let orders = JSON.parse(sessionStorage.getItem("cart"));
-  const [sale,setsale] = useState([]);
+  const [sale, setsale] = useState([]);
   useEffect(() => {
     const fetchsaleList = async () => {
       try {
@@ -34,62 +39,81 @@ const Cart = () => {
   orders.map((order) => {
     totalQuantity += parseInt(order.quantity);
     totalPrice += parseInt(order.quantity) * parseInt(order.price);
-    sale.map((data)=>{
+    sale.map((data) => {
       console.log(document.getElementById("sales").value);
-      if(data?.id == document.getElementById("sales").value){
+      if (data?.id == document.getElementById("sales").value) {
         var today = new Date();
         var date;
-        if(today.getMonth()<9)
-         date = today.getFullYear() + '-0' + (today.getMonth() + 1) + '-' + today.getDate();
-        else{
-          date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        if (today.getMonth() < 9)
+          date =
+            today.getFullYear() +
+            "-0" +
+            (today.getMonth() + 1) +
+            "-" +
+            today.getDate();
+        else {
+          date =
+            today.getFullYear() +
+            "-" +
+            (today.getMonth() + 1) +
+            "-" +
+            today.getDate();
         }
-        if(data.date_start<date && data.date_finish>date){
-          if(totalPrice>=parseInt(data.Require))totalPrice =totalPrice - totalPrice*data.Percent/100;
+        if (data.date_start < date && data.date_finish > date) {
+          if (totalPrice >= parseInt(data.Require))
+            totalPrice = totalPrice - (totalPrice * data.Percent) / 100;
           console.log(totalPrice);
         }
       }
     });
     quantity.push(parseInt(order.quantity));
   });
-  const totalaftersale = () =>{
+  const totalaftersale = () => {
     console.log(document.getElementById("sales").value);
-    sale.map((data)=>{
+    sale.map((data) => {
       console.log(document.getElementById("sales").value);
-      if(data?.id == document.getElementById("sales").value){
+      if (data?.id == document.getElementById("sales").value) {
         var today = new Date();
         var date;
-        if(today.getMonth()<9)
-         date = today.getFullYear() + '-0' + (today.getMonth() + 1) + '-' + today.getDate();
-        else{
-          date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        if (today.getMonth() < 9)
+          date =
+            today.getFullYear() +
+            "-0" +
+            (today.getMonth() + 1) +
+            "-" +
+            today.getDate();
+        else {
+          date =
+            today.getFullYear() +
+            "-" +
+            (today.getMonth() + 1) +
+            "-" +
+            today.getDate();
         }
-        if(data.date_start<date && data.date_finish>date){
-          if(totalPrice>=parseInt(data.Require))totalPrice =totalPrice - totalPrice*data.Percent/100;
+        if (data.date_start < date && data.date_finish > date) {
+          if (totalPrice >= parseInt(data.Require))
+            totalPrice = totalPrice - (totalPrice * data.Percent) / 100;
           console.log(totalPrice);
         }
       }
     });
     setQuantityProduct(quantity);
-  }
-  const handlePayment = async() => {
-
-    const resorder = await createorder(user.ID,totalPrice,totalQuantity);
-    orders.map((data,index)=>{
-      createorder_detail(resorder?.id,data.ID,quantityProduct[index]);
-      updatecart(data.ID,quantityProduct[index]);
+  };
+  const handlePayment = async () => {
+    const resorder = await createorder(user.ID, totalPrice, totalQuantity);
+    orders.map((data, index) => {
+      createorder_detail(resorder?.id, data.ID, quantityProduct[index]);
+      updatecart(data.ID, quantityProduct[index]);
     });
     const decision = window.confirm("Bạn có muốn mua tiếp không?");
     if (decision) {
       navigate("/shop");
-      sessionStorage.removeItem("cart");
     } else {
       sessionStorage.removeItem("cart");
       toast.success(
         "Bạn đã thanh toán thành công, vui lòng hãy chờ để được xử lý quá trình thanh toán"
       );
       setTimeout(() => {
-        
         navigate(`/profile/${user?.ID}`, { replace: true });
       }, 2500);
     }
@@ -98,12 +122,11 @@ const Cart = () => {
   const handleIncrement = (index) => {
     quantity[index]++;
     orders[index].quantity = quantity[index];
-    if(quantity[index]>20){
-      quantity[index]=20;
+    if (quantity[index] > 20) {
+      quantity[index] = 20;
     }
     sessionStorage.setItem("cart", JSON.stringify(orders));
     setQuantityProduct(quantity);
-    
   };
   const handleDecrement = (index) => {
     quantity[index]--;
@@ -114,7 +137,6 @@ const Cart = () => {
     sessionStorage.setItem("cart", JSON.stringify(orders));
 
     setQuantityProduct(quantity);
-    
   };
 
   const handleDelete = (index) => {
@@ -196,13 +218,13 @@ const Cart = () => {
                   <td></td>
                   <td className="font-bold text-lg">Voucher:</td>
                   <td className="py-3">
-                    <select id="sales" className=" block w-full px-3 py-1.5 text-base font-normal text-gray-700  bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                    onChange={(e) => totalaftersale(e)}
+                    <select
+                      id="sales"
+                      className=" block w-full px-3 py-1.5 text-base font-normal text-gray-700  bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                      onChange={(e) => totalaftersale(e)}
                     >
-                      {sale.map((data)=>(
-                        <option value={data?.id} >
-                         { data?.Name}
-                        </option>
+                      {sale.map((data) => (
+                        <option value={data?.id}>{data?.Name}</option>
                       ))}
                     </select>
                   </td>

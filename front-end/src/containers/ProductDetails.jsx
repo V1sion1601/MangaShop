@@ -42,7 +42,10 @@ const ProductDetails = () => {
           cart.map((data) => {
             if (data.ID === productList[0].ID) {
               flag++;
-              if(productList[0].quantity<parseInt(data.quantity)+parseInt(productQuantity)){
+              if (
+                productList[0].quantity <
+                parseInt(data.quantity) + parseInt(productQuantity)
+              ) {
                 toast.error("Bạn nhập quá mức số lượng sản phẩm hiện có", {
                   position: "top-right",
                   autoClose: 1000,
@@ -52,11 +55,10 @@ const ProductDetails = () => {
                   draggable: true,
                   progress: undefined,
                 });
-              }else{
-             
-              data.quantity = parseInt(data.quantity) + parseInt(productQuantity);
+              } else {
+                data.quantity =
+                  parseInt(data.quantity) + parseInt(productQuantity);
               }
-              
             }
           });
           if (flag === 0) {
@@ -132,18 +134,18 @@ const ProductDetails = () => {
               Tình trạng:{" "}
               <span
                 className={`${
-                  productList[0]?.status === 1
+                  productList[0]?.status === 0
                     ? "text-indigo-400"
                     : "text-red-600"
                 } font-bold`}
               >
-                {productList[0]?.status === 1 ? "Còn hàng" : "Hết hàng"}
+                {productList[0]?.status === 0 ? "Còn hàng" : "Hết hàng"}
               </span>
             </h2>
-            {productList[0]?.status === 1 && (
+            {productList[0]?.status === 0 && (
               <h2 className="text-xl mt-3">
                 Số lượng:{" "}
-                <span>
+                <span className="mr-7">
                   <input
                     type="number"
                     className="px-3 py-1.5 text-gray-700 outline-none border  focus:border-indigo-600 shadow"
@@ -152,10 +154,11 @@ const ProductDetails = () => {
                     value={productQuantity}
                     onChange={(e) => setProductQuantity(e.target.value)}
                   />
+                  <span className="ml-2 font-semibold">{` / ${productList[0].quantity}`}</span>
                 </span>
               </h2>
             )}
-            {productList[0]?.status === 1 && (
+            {productList[0]?.status === 0 && (
               <button
                 onClick={handleOrder}
                 className={`mt-5 px-7 py-3 mb-4 rounded-lg bg-indigo-500 uppercase tracking-wider font-semibold text-sm text-white shadow-lg hover:-translate-y-0.5 transform transition hover:bg-indigo-400 focus:ring focus:ring-offset-2 active:bg-indigo-600`}

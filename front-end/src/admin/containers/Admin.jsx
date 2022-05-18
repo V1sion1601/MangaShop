@@ -43,12 +43,15 @@ const Admin = () => {
             onClick={() => setHover(!hover)}
             className="w-1/3 flex justify-end items-center cursor-pointer"
           >
-            <span className="text-right"
-            onClick={() => {
-              sessionStorage.clear();
-              navigate("/");
-            }}
-            >Đăng xuất</span>
+            <span
+              className="text-right"
+              onClick={() => {
+                sessionStorage.clear();
+                navigate("/");
+              }}
+            >
+              Đăng xuất
+            </span>
           </div>
           {hover && (
             <div className="absolute top-10 bg-white right-5 max-w-lg w-32 shadow-md p-2 ">

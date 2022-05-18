@@ -123,10 +123,10 @@ const Home = () => {
             <Routes>
               <Route path="/" element={<ProductList />} />
               <Route path="/search" element={<Search />} />
-              {/* In case if user accidentally deleted the parameter */}
+
               <Route path="/shop" element={<Shop />} />
               <Route path="/shop/:categoryId" element={<Shop />} />
-              {/* In case if user accidentally deleted the parameter */}
+
               <Route path="/details" element={<Shop />} />
               <Route path="/profile/:userId" element={<Profile />} />
               <Route path="/cart" element={<Cart />} />

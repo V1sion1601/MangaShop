@@ -1,12 +1,18 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 //Dummy data
 import isEmpty from "validator/lib/isEmpty";
 import isInt from "validator/lib/isInt";
-import { checkItems, itemsDataReleased,numberWithComma,deleteproduct,createproduct } from "../../utils/dummyData";
+import {
+  checkItems,
+  itemsDataReleased,
+  numberWithComma,
+  deleteproduct,
+  createproduct,
+} from "../../utils/dummyData";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 const Products = () => {
-  const showForm = `absolute px-12 flex flex-col  justify-center items-center top-0 bottom-0 left-0 right-0 bg-blackOverlay`;
+  const showForm = `absolute px-12 pt-5 flex flex-col  justify-start items-center inset-0 bg-blackOverlay`;
   const [toggleForm, setToggleForm] = useState(false);
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -45,18 +51,25 @@ const Products = () => {
 
     setProductList(arrChecked);
   };
-  const handleDeleteBtn =  () => {
+  const handleDeleteBtn = () => {
     let checked = productList.filter((item) => item.status === true);
     if (checked.length > 0) {
       let confirm =
         window.confirm(`Bạn có chắc xóa những thể loại có ${checked.map(
           (item) => {
             return `id: ${item.ID} `;
-            
           }
         )} không?
       `);
-      confirm && checked.map((item)=>{  deleteproduct(item.ID)}) &&alert("Xóa thành công") ;
+      if (
+        confirm &&
+        checked.map((item) => {
+          deleteproduct(item.ID);
+        })
+      ) {
+        alert("Xóa thành công");
+        window.location.reload();
+      }
     } else {
       alert("Không có gì để xóa");
     }
@@ -88,7 +101,7 @@ const Products = () => {
     e.preventDefault();
     const isValid = validateAll();
     if (isValid) {
-      createproduct(name,price,quantity,image.replace(/^.*[\\\/]/, ''));
+      createproduct(name, price, quantity, image.replace(/^.*[\\\/]/, ""));
       alert("Thành công");
       //navigate("/admin/products");
       setToggleForm(false);
@@ -101,7 +114,7 @@ const Products = () => {
   };
 
   return (
-    <div className="flex flex-col justify-start items-center h-screen overflow-y-scroll relative">
+    <div className="flex flex-col justify-start items-center h-fit relative">
       <div className={toggleForm === true ? showForm : `${showForm} hidden `}>
         <div className="bg-gray-500  flex flex-col w-full rounded mx-5">
           <div className="text-white flex pr-5 flex-row items-center w-full justify-end">
@@ -220,8 +233,12 @@ const Products = () => {
           {productList.map((item, index) => (
             <tr key={index} className="border-b-2   border-gray-300">
               <td>{item.ID}</td>
-              <td>
-                <img className="h-44 py-2" src={`/assets/${item.image}`} alt="demo" />
+              <td className="py-5">
+                <img
+                  className="h-44 "
+                  src={`/assets/${item.image}`}
+                  alt="demo"
+                />
               </td>
               <td>{item.Name}</td>
               <td>{`${numberWithComma(item.price)} VNĐ`}</td>
@@ -230,7 +247,7 @@ const Products = () => {
                 <input
                   type="checkbox"
                   name={item.Name}
-                  checked={item.status == 1 ? true:false}
+                  checked={item.status === 0 ? false : true}
                   onChange={() => handleCheckbox(item.ID)}
                   className="w-11 h-11 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
                 />

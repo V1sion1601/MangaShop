@@ -1,14 +1,18 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 
 //Dummy data
-import { cartItems,itemsDataReleased,updateproduct } from "../../utils/dummyData";
+import {
+  itemsDataReleased,
+  updateproduct,
+  numberWithComma,
+} from "../../utils/dummyData";
 import isEmpty from "validator/lib/isEmpty";
 import isInt from "validator/lib/isInt";
 import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
   const navigate = useNavigate();
-  const [id,setid] = useState("");
+  const [id, setid] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -60,8 +64,9 @@ const AddProduct = () => {
     e.preventDefault();
     const isValid = validateAll();
     if (isValid) {
-      updateproduct(id,name,price,quantity);
+      updateproduct(id, name, price, quantity);
       alert("Thành công");
+      window.location.reload();
     }
     return;
   };
@@ -135,7 +140,7 @@ const AddProduct = () => {
           </form>
         </div>
       </div>
-      <div className="flex flex-col justify-start items-center w-1/2 h-screen  overflow-y-scroll">
+      <div className="flex flex-col justify-start items-center w-1/2 px-5 h-screen  overflow-y-scroll">
         <header className="font-bold uppercase text-2xl mb-5 pt-5">
           Bảng hàng hóa hiện tại
         </header>
@@ -152,15 +157,19 @@ const AddProduct = () => {
               <tr key={index} className="border-b-2   border-gray-300">
                 <td
                   onClick={() => handleEditProduct(item.ID)}
-                  className="cursor-pointer text-blue-500 font-semibold"
+                  className="cursor-pointer text-blue-500 font-semibold pr-5"
                 >
                   {item.ID}
                 </td>
                 <td>
-                  <img className="h-36 py-2" src={`/assets/${item.image}`} alt="demo" />
+                  <img
+                    className="h-36 py-2 pr-8"
+                    src={`/assets/${item.image}`}
+                    alt="demo"
+                  />
                 </td>
-                <td>{item.Name}</td>
-                <td>{`${item.price} VNĐ`}</td>
+                <td className="pr-8">{item.Name}</td>
+                <td>{`${numberWithComma(item.price)} VNĐ`}</td>
                 <td>{item.quantity}</td>
               </tr>
             ))}
