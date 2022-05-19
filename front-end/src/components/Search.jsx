@@ -37,22 +37,28 @@ const Search = () => {
         onChange={(e) => setSearch(e.target.value)}
         className="w-full py-4 px-4 rounded-lg outline-none"
       />
-      <div className="h-full grid grid-cols-4 gap-6 w-full pt-6">
-        {foundResult.length > 0 ? (
-          foundResult.map((book) => (
-            <Item
-              key={book?.ID}
-              ID={book?.ID}
-              Name={book?.Name}
-              status={book?.status}
-              price={book?.price}
-              image={book?.image}
-            />
-          ))
-        ) : (
-          <Error msg={"Không có kết quả, mời bạn nhập lại"} />
-        )}
-      </div>
+      {foundResult.length > 0 ? (
+        <>
+          <div className="h-full grid grid-cols-4 gap-6 w-full pt-6">
+            {foundResult.map((book) => (
+              <Item
+                key={book?.ID}
+                ID={book?.ID}
+                Name={book?.Name}
+                status={book?.quantity}
+                price={book?.price}
+                image={book?.image}
+              />
+            ))}
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="w-full flex flex-col items-center justify-center">
+            <Error msg={"Không có kết quả, mời bạn nhập lại"} />
+          </div>
+        </>
+      )}
     </div>
   );
 };

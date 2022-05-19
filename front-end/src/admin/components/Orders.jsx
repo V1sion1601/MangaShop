@@ -52,7 +52,7 @@ const Orders = () => {
     setStatus(detail.status);
   };
   return (
-    <div className="relative flex flex-col justify-start items-center h-fit ">
+    <div className="relative flex flex-col justify-center items-center h-fit ">
       <div className={toggleForm === true ? showForm : `${showForm} hidden `}>
         <div className="bg-gray-500  flex flex-col w-full   rounded mx-5">
           <div className="text-white flex pr-5 flex-row items-center w-full justify-end">
@@ -151,7 +151,7 @@ const Orders = () => {
         <tbody>
           {order.map((item, index) => (
             <tr key={index} className="border-b-2   border-gray-300">
-              <td>{item.ID}</td>
+              <td className="pr-5">{item.ID}</td>
               <td>{item.ID_customer}</td>
               <td>{`${numberWithComma(item.price)} VNĐ`}</td>
               <td>{item.quantity}</td>

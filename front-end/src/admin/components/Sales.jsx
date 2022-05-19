@@ -84,14 +84,19 @@ const Sales = () => {
     const resgetsale = await getsalebyName(name);
     console.log(resgetsale);
     if (resgetsale != 6) {
-      const resupdate = updatesale(
-        id,
-        name,
-        per,
-        condition,
-        dateStart,
-        dateEnd
-      );
+      if (dateStart > dateEnd) {
+        toast.error("Nhập ngày sai");
+      } else {
+        const resupdate = updatesale(
+          id,
+          name,
+          per,
+          condition,
+          dateStart,
+          dateEnd
+        );
+        window.location.reload();
+      }
     } else {
       toast.error("Tên khuyến mãi không tồn tại xin cập nhật lại!", {
         position: "top-right",
@@ -110,7 +115,12 @@ const Sales = () => {
     if (!isValid) return;
     const resgetsale = await getsalebyName(name);
     if (resgetsale == 6) {
-      const resupdate = createsale(name, per, condition, dateStart, dateEnd);
+      if (dateStart > dateEnd) {
+        toast.error("Nhập ngày sai!");
+      } else {
+        const resupdate = createsale(name, per, condition, dateStart, dateEnd);
+        window.location.reload();
+      }
     } else {
       toast.error("Tên khuyến mãi đã tồn tại xin nhập tên khác!", {
         position: "top-right",

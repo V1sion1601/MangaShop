@@ -15,6 +15,7 @@ import Shop from "./Shop";
 import Profile from "./Profile";
 import Cart from "../components/Cart";
 import ProductDetails from "./ProductDetails";
+import Error from "../components/Error";
 //Components
 import ProductList from "./ProductList";
 import Footer from "../components/Footer";
@@ -23,6 +24,7 @@ import OrderDetail from "../components/OrderDetail";
 
 const Home = () => {
   const user = JSON.parse(sessionStorage.getItem("user"));
+
   const [hover, setHover] = useState(false);
 
   const { pathname } = useLocation();
@@ -133,6 +135,11 @@ const Home = () => {
               <Route path="/details/:productId" element={<ProductDetails />} />
               <Route path="/order/detail/:id" element={<OrderDetail />} />
             </Routes>
+            {sessionStorage.getItem("admin") && (
+              <div className="w-full">
+                <Error msg={"Không thể tìm thấy trang!"} />
+              </div>
+            )}
           </div>
         </div>
         <div className="bg-slate-300">

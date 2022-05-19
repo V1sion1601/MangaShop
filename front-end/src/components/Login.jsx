@@ -9,8 +9,14 @@ import isEmail from "validator/lib/isEmail";
 import { useNavigate } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 import { toast } from "react-toastify";
-import {accountbyusername, customerbyID, accountbygoogle, createaccountforgoogle,createcustomerforgoogle} from "../utils/dummyData";
-import { NULL } from "mysql/lib/protocol/constants/types";
+import {
+  accountbyusername,
+  customerbyID,
+  accountbygoogle,
+  createaccountforgoogle,
+  createcustomerforgoogle,
+} from "../utils/dummyData";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,50 +43,50 @@ const Login = () => {
     e.preventDefault();
     const isValid = validateAll();
     if (!isValid) return;
-    const res = await accountbyusername(email,password);
-    console.log(res[0]?.role);
-    if(res != 6){
-        if(res[0]?.status==1){
-        if(res[0]?.role!=1){
-        const res2 = await customerbyID(res[0]?.ID);
-        console.log(res2);
-        sessionStorage.setItem("user", JSON.stringify(res2[0]));
-        toast.success("Đăng nhập thành công!", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      navigate("/", { replace: true });
+
+    const res = await accountbyusername(email, password);
+
+    if (res !== 6) {
+      if (res[0]?.status == 1) {
+        if (res[0]?.role != 1) {
+          const res2 = await customerbyID(res[0]?.ID);
+          console.log(res2);
+          sessionStorage.setItem("user", JSON.stringify(res2[0]));
+          toast.success("Đăng nhập thành công!", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          navigate("/", { replace: true });
+        } else if (res[0]?.role == 1) {
+          toast.success("Đăng nhập thành công!", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          navigate("/admin", { replace: true });
+          sessionStorage.setItem("admin", JSON.stringify(res[0]));
+        }
+      } else {
+        toast.error("Tài khoản đã bị khóa!", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       }
-      else if (res[0]?.role==1){
-        toast.success("Đăng nhập thành công!", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      navigate("/admin", { replace: true });
-      }
-    } else{
-      toast.error("Tài khoản đã bị khóa!", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    }
-  }
-    else {
+    } else {
       toast.error("Đăng nhập không thành công", {
         position: "top-right",
         autoClose: 1000,
@@ -96,51 +102,62 @@ const Login = () => {
   //Google response when succeed
   const responseGoogle = async (response) => {
     // sessionStorage.setItem("usergoogle", JSON.stringify(response.profileObj));
-    const res = await accountbygoogle((response.profileObj).googleId);
-    console.log((response.profileObj).googleId);
-    if(res != 6){
-      if(res[0]?.status==1){
-      if(res[0]?.role!=1){
-      const res2 = await customerbyID(res[0]?.ID);
-      console.log(res2);
-      sessionStorage.setItem("user", JSON.stringify(res2[0]));
-      toast.success("Đăng nhập thành công!", {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-    navigate("/", { replace: true });
-      console.log(response.profileObj.email);
-    }} else{
-      toast.error("Tài khoản đã bị khóa!", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-  }}
-    else {
-      const rescreateaccount = await createaccountforgoogle(response.profileObj.email,"123456",response.profileObj.googleId);
-      const rescreatecustomer = await createcustomerforgoogle(response.profileObj.name,rescreateaccount?.id);
-      toast.success("Đăng ký tài khoản thành công, Xin hãy vào trang cá nhân" 
-      + " và nhập đầy đủ địa chỉ và số điện thoại để có thể tiến hành đặt hàng", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
+    const res = await accountbygoogle(response.profileObj.googleId);
+    console.log(response.profileObj.googleId);
+    if (res != 6) {
+      if (res[0]?.status == 1) {
+        if (res[0]?.role != 1) {
+          const res2 = await customerbyID(res[0]?.ID);
+          console.log(res2);
+          sessionStorage.setItem("user", JSON.stringify(res2[0]));
+          toast.success("Đăng nhập thành công!", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          navigate("/", { replace: true });
+          console.log(response.profileObj.email);
+        }
+      } else {
+        toast.error("Tài khoản đã bị khóa!", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    } else {
+      const rescreateaccount = await createaccountforgoogle(
+        response.profileObj.email,
+        "123456",
+        response.profileObj.googleId
+      );
+      const rescreatecustomer = await createcustomerforgoogle(
+        response.profileObj.name,
+        rescreateaccount?.id
+      );
+      toast.success(
+        "Đăng ký tài khoản thành công, Xin hãy vào trang cá nhân" +
+          " và nhập đầy đủ địa chỉ và số điện thoại để có thể tiến hành đặt hàng",
+        {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        }
+      );
       sessionStorage.setItem("user", JSON.stringify(rescreatecustomer));
-      navigate("/profile/"+rescreatecustomer?.ID,{ replace:true});
+      navigate("/profile/" + rescreatecustomer?.ID, { replace: true });
     }
   };
   //Google response when fail
@@ -159,7 +176,11 @@ const Login = () => {
   return (
     <div className="flex justify-start items-center flex-col h-screen">
       <div className="relative w-full h-full">
-        <img src={'assets/Wallpaper.jpg'} alt="" className="w-full h-full object-cover" />
+        <img
+          src={"assets/Wallpaper.jpg"}
+          alt=""
+          className="w-full h-full object-cover"
+        />
         <div className="absolute flex flex-col  rounded-md justify-center items-center bg-whiteOverlay inset-x-100 inset-y-14 ">
           <h1 className="text-4xl font-semibold font-title uppercase">
             Đăng nhập

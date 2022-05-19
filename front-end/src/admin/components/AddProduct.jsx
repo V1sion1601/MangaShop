@@ -16,7 +16,7 @@ const AddProduct = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [image, setImage] = useState("");
+
   const [errors, setErrors] = useState({});
   const [productList, setProductList] = useState([]);
   useEffect(() => {
@@ -37,7 +37,6 @@ const AddProduct = () => {
     setName(model.Name);
     setPrice(model.price.toString());
     setQuantity(0);
-    //setImage(model.image);
   };
   const validateAll = () => {
     const msg = {};
@@ -47,12 +46,12 @@ const AddProduct = () => {
     }
     if (isEmpty(price)) {
       msg.price = "Mời bạn nhập lại giá tiền";
-    } else if (!isInt(price)) {
+    } else if (parseInt(price) < 0) {
       msg.price = "Giá của bạn không hợp lệ";
     }
     if (isEmpty(quantity)) {
       msg.quantity = "Mời bạn nhập lại số lượng";
-    } else if (!isInt(quantity)) {
+    } else if (parseInt(quantity) < 0) {
       msg.quantity = "Số lượng của bạn không hợp lệ";
     }
     setErrors(msg);

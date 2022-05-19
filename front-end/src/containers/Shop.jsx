@@ -11,6 +11,7 @@ const Shop = () => {
   const cateId = parseInt(categoryId);
 
   const [productList, setProductList] = useState([]);
+
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchProductList = async () => {

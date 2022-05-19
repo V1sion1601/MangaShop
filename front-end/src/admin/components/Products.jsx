@@ -4,24 +4,27 @@ import { useNavigate } from "react-router-dom";
 import isEmpty from "validator/lib/isEmpty";
 import isInt from "validator/lib/isInt";
 import {
-  checkItems,
   itemsDataReleased,
   numberWithComma,
   deleteproduct,
   createproduct,
+  getallcategory,
 } from "../../utils/dummyData";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 const Products = () => {
   const showForm = `absolute px-12 pt-5 flex flex-col  justify-start items-center inset-0 bg-blackOverlay`;
   const [toggleForm, setToggleForm] = useState(false);
-  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [image, setImage] = useState("");
+  const [selectedCate, setSelectedCate] = useState("");
+
   const [errors, setErrors] = useState({});
   const [productList, setProductList] = useState([]);
   const [checkbox, setCheckbox] = useState([]);
+  const [category, setCategory] = useState([]);
   useEffect(() => {
     const fetchProductList = async () => {
       try {
@@ -29,30 +32,52 @@ const Products = () => {
         console.log("Fetch products successfully: ", response);
         setProductList(response);
         setCheckbox(response);
+        setSelectedCate("1");
       } catch (error) {
         console.log("Failed to fetch product list: ", error);
       }
     };
     fetchProductList();
   }, []);
+
+  useEffect(() => {
+    const fetchCategoryList = async () => {
+      try {
+        const response = await getallcategory();
+        console.log("Fetch products successfully: ", response);
+        setCategory(response);
+
+        console.log(category);
+      } catch (error) {
+        console.log("Failed to fetch product list: ", error);
+      }
+    };
+    fetchCategoryList();
+  }, []);
+
   const handleCheckbox = (id) => {
     console.log(id);
     console.log(checkbox);
+
     const arrChecked = productList.map((item) => {
+      console.log(item);
+      console.log(item.status);
       return {
         ID: item.ID,
         Name: item.Name,
         price: item.price,
         image: item.image,
+        ID_category: item.ID_category,
         quantity: item.quantity,
-        status: id === item.ID ? !item.status : item.status,
+        status: id === item.ID ? (item.status ? 0 : 1) : item.status,
       };
     });
-
+    console.log(id);
+    console.log(productList);
     setProductList(arrChecked);
   };
   const handleDeleteBtn = () => {
-    let checked = productList.filter((item) => item.status === true);
+    let checked = productList.filter((item) => item.status === 1);
     if (checked.length > 0) {
       let confirm =
         window.confirm(`Bạn có chắc xóa những thể loại có ${checked.map(
@@ -81,16 +106,19 @@ const Products = () => {
     }
     if (isEmpty(price)) {
       msg.price = "Mời bạn nhập lại giá tiền";
-    } else if (!isInt(price)) {
+    } else if (parseInt(price) < 0) {
       msg.price = "Giá của bạn không hợp lệ";
     }
     if (isEmpty(quantity)) {
       msg.quantity = "Mời bạn nhập lại số lượng";
-    } else if (!isInt(quantity)) {
+    } else if (parseInt(quantity) < 0) {
       msg.quantity = "Số lượng của bạn không hợp lệ";
     }
     if (isEmpty(image)) {
       msg.image = "Mời bạn chọn lại hình ảnh";
+    }
+    if (isEmpty(selectedCate)) {
+      msg.cate = "Mời bạn chọn lại thể loại";
     }
     setErrors(msg);
     if (Object.keys(msg).length > 0) return false;
@@ -99,16 +127,26 @@ const Products = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setImage(image.substring(12));
+    console.log("Test");
     const isValid = validateAll();
     if (isValid) {
-      createproduct(name, price, quantity, image.replace(/^.*[\\\/]/, ""));
+      createproduct(
+        name,
+        price,
+        quantity,
+        selectedCate,
+        image.replace(/^.*[\\\/]/, "")
+      );
       alert("Thành công");
-      //navigate("/admin/products");
+
       setToggleForm(false);
       setName("");
       setPrice("");
       setQuantity("");
       setImage("");
+      setSelectedCate(1);
+      window.location.reload();
     }
     return;
   };
@@ -190,6 +228,25 @@ const Products = () => {
                     {errors.image}
                   </small>
                 </div>
+                <label className="flex justify-start items-center font-bold text-lg">
+                  Thể loại
+                </label>
+                <div className="w-full ">
+                  <select
+                    value={selectedCate}
+                    onChange={(e) => setSelectedCate(e.target.value)}
+                    className="text-black w-full px-3 py-2"
+                  >
+                    {category.map((item) => (
+                      <option value={item?.ID} id={item?.ID}>
+                        {item.Name}
+                      </option>
+                    ))}
+                  </select>
+                  {/* <small className="text-left block text-red-300  font-bold">
+                    {errors.image}
+                  </small> */}
+                </div>
               </div>
               <div className="flex flex-col justify-center items-center mt-5">
                 <input
@@ -227,6 +284,8 @@ const Products = () => {
           <td>Tên</td>
           <td>Giá</td>
           <td>Số lượng</td>
+          <td>Thể loại</td>
+
           <td>Xóa</td>
         </thead>
         <tbody>
@@ -243,6 +302,10 @@ const Products = () => {
               <td>{item.Name}</td>
               <td>{`${numberWithComma(item.price)} VNĐ`}</td>
               <td>{item.quantity}</td>
+              <td>
+                {category.find((cate) => cate?.ID === item.ID_category)?.Name}
+              </td>
+
               <td>
                 <input
                   type="checkbox"

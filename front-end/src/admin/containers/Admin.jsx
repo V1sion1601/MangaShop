@@ -20,14 +20,14 @@ import Accounts from "../components/Accounts";
 import Sales from "../components/Sales";
 import Categories from "../components/Categories";
 import OrderDetail from "../components/OrderDetail";
+import Error from "../../components/Error";
 const Admin = () => {
   const { pathname } = useLocation();
   const [hover, setHover] = useState(false);
   const navigate = useNavigate();
   const user = JSON.parse(sessionStorage.getItem("user"));
   const idOrder = pathname.slice(14);
-  console.log(idOrder);
-  console.log(pathname);
+
   return (
     <>
       <div className="flex flex-row px-3 bg-red-50">

@@ -33,7 +33,7 @@ const ProductDetails = () => {
   const handleOrder = () => {
     var flag = 0;
     if (user) {
-      if (productList[0].quantity > productQuantity) {
+      if (productList[0].quantity >= productQuantity && productQuantity > 0) {
         if (
           sessionStorage.getItem("cart") != null &&
           sessionStorage.getItem("cart") != "null"
@@ -43,7 +43,7 @@ const ProductDetails = () => {
             if (data.ID === productList[0].ID) {
               flag++;
               if (
-                productList[0].quantity <
+                productList[0].quantity <=
                 parseInt(data.quantity) + parseInt(productQuantity)
               ) {
                 toast.error("Bạn nhập quá mức số lượng sản phẩm hiện có", {
@@ -134,15 +134,15 @@ const ProductDetails = () => {
               Tình trạng:{" "}
               <span
                 className={`${
-                  productList[0]?.status === 0
+                  productList[0]?.quantity > 0
                     ? "text-indigo-400"
                     : "text-red-600"
                 } font-bold`}
               >
-                {productList[0]?.status === 0 ? "Còn hàng" : "Hết hàng"}
+                {productList[0]?.quantity > 0 ? "Còn hàng" : "Hết hàng"}
               </span>
             </h2>
-            {productList[0]?.status === 0 && (
+            {productList[0]?.quantity > 0 && (
               <h2 className="text-xl mt-3">
                 Số lượng:{" "}
                 <span className="mr-7">

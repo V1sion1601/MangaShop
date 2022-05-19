@@ -11,6 +11,7 @@ import {
 } from "../utils/dummyData";
 import Error from "./Error";
 import { BiTrashAlt } from "react-icons/bi";
+import isEmpty from "validator/lib/isEmpty";
 const Cart = () => {
   const navigate = useNavigate();
   const user = JSON.parse(sessionStorage.getItem("user"));
@@ -100,22 +101,34 @@ const Cart = () => {
     setQuantityProduct(quantity);
   };
   const handlePayment = async () => {
-    const resorder = await createorder(user.ID, totalPrice, totalQuantity);
-    orders.map((data, index) => {
-      createorder_detail(resorder?.id, data.ID, quantityProduct[index]);
-      updatecart(data.ID, quantityProduct[index]);
-    });
-    const decision = window.confirm("Bạn có muốn mua tiếp không?");
-    if (decision) {
-      navigate("/shop");
+    console.log(user.adress);
+
+    if (
+      user.adress != "" &&
+      user.phone != "" &&
+      user.adress !== 6 &&
+      user.phone !== 6
+    ) {
+      const resorder = await createorder(user.ID, totalPrice, totalQuantity);
+      orders.map((data, index) => {
+        createorder_detail(resorder?.id, data.ID, quantityProduct[index]);
+        updatecart(data.ID, quantityProduct[index]);
+      });
+      const decision = window.confirm("Bạn có muốn mua tiếp không?");
+      if (decision) {
+        navigate("/shop");
+      } else {
+        sessionStorage.removeItem("cart");
+        toast.success(
+          "Bạn đã thanh toán thành công, vui lòng hãy chờ để được xử lý quá trình thanh toán"
+        );
+        setTimeout(() => {
+          navigate(`/profile/${user?.ID}`, { replace: true });
+        }, 2500);
+      }
     } else {
-      sessionStorage.removeItem("cart");
-      toast.success(
-        "Bạn đã thanh toán thành công, vui lòng hãy chờ để được xử lý quá trình thanh toán"
-      );
-      setTimeout(() => {
-        navigate(`/profile/${user?.ID}`, { replace: true });
-      }, 2500);
+      toast.error("Mời bạn nhập số điện thoại và địa chỉ");
+      navigate(`/profile/${user?.ID}`, { replace: true });
     }
   };
   quantityProduct.push(...quantity);
@@ -263,7 +276,7 @@ const Cart = () => {
             </table>
           </>
         ) : (
-          <div>
+          <div className="w-full">
             <Error msg={"Hiện bạn chưa thêm sản phẩm nào hết"} />
           </div>
         )}

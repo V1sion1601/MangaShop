@@ -4,7 +4,11 @@ import isEmpty from "validator/lib/isEmpty";
 import isEmail from "validator/lib/isEmail";
 import isMobilePhone from "validator/lib/isMobilePhone";
 import { useNavigate } from "react-router-dom";
-import { createaccount, createcustomer, accountbyusername2} from "../utils/dummyData";
+import {
+  createaccount,
+  createcustomer,
+  accountbyusername2,
+} from "../utils/dummyData";
 import { toast } from "react-toastify";
 const Image = "assets/Wallpaper.jpg";
 
@@ -49,7 +53,7 @@ const Register = () => {
     if (isEmpty(address)) {
       msg.address = "Mời bạn nhập địa chỉ của bạn";
     }
-    if(isEmpty(name)){
+    if (isEmpty(name)) {
       msg.name = "Mời bạn nhập lại họ và tên của bạn";
     }
 
@@ -58,12 +62,12 @@ const Register = () => {
     return true;
   };
   //Submit progress
-  const submitRegister = async(e) => {
+  const submitRegister = async (e) => {
     e.preventDefault();
     const isValid = validateAll();
     if (!isValid) return;
     const resaccount = await accountbyusername2(email);
-    if(resaccount === 1){
+    if (resaccount === 1) {
       toast.error("Email đã tồn tại xin hãy đăng ký bằng Email khác", {
         position: "top-right",
         autoClose: 1000,
@@ -73,9 +77,14 @@ const Register = () => {
         draggable: true,
         progress: undefined,
       });
-    } else{
-      const rescreateaccount = await createaccount(email,password);
-      const rescreatecustomer = await createcustomer(name,rescreateaccount?.id,address,phone);
+    } else {
+      const rescreateaccount = await createaccount(email, password);
+      const rescreatecustomer = await createcustomer(
+        name,
+        rescreateaccount?.id,
+        address,
+        phone
+      );
       sessionStorage.setItem("user", JSON.stringify(rescreatecustomer));
       toast.success("Đăng ký thành công!", {
         position: "top-right",
@@ -88,8 +97,6 @@ const Register = () => {
       });
       navigate("/", { replace: true });
     }
-    
-    // navigate("/login");
   };
 
   //Layout
