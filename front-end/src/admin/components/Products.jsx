@@ -80,7 +80,7 @@ const Products = () => {
     let checked = productList.filter((item) => item.status === 1);
     if (checked.length > 0) {
       let confirm =
-        window.confirm(`Bạn có chắc xóa những thể loại có ${checked.map(
+        window.confirm(`Bạn có chắc xóa những sản phẩm có ${checked.map(
           (item) => {
             return `id: ${item.ID} `;
           }

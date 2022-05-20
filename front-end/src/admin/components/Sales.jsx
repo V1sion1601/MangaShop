@@ -138,7 +138,7 @@ const Sales = () => {
     <div className="flex flex-row w-full h-full gap-5 ">
       <div className="flex flex-col justify-start  w-1/2 h-full pt-5 ">
         <header className="font-bold uppercase text-center text-2xl mb-5">
-          Thêm khuyến mãi
+          khuyến mãi
         </header>
         <div>
           <form>

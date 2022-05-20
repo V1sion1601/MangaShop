@@ -72,8 +72,9 @@ const Login = () => {
             draggable: true,
             progress: undefined,
           });
-          navigate("/admin", { replace: true });
           sessionStorage.setItem("admin", JSON.stringify(res[0]));
+          navigate("/admin", { replace: true });
+          window.location.reload();
         }
       } else {
         toast.error("Tài khoản đã bị khóa!", {

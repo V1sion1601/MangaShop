@@ -67,7 +67,7 @@ const Register = () => {
     const isValid = validateAll();
     if (!isValid) return;
     const resaccount = await accountbyusername2(email);
-    if (resaccount === 1) {
+    if (resaccount !== 6) {
       toast.error("Email đã tồn tại xin hãy đăng ký bằng Email khác", {
         position: "top-right",
         autoClose: 1000,
